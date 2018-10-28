@@ -11,7 +11,7 @@ class System:
         return np.linspace(0, 100, node_number)
 
     def calculate_distance_matrix(self):
-        self.distance_matrix = calculate_1d_dist_matrix(self.nodes)
+        return calculate_1d_dist_matrix(self.nodes)
         
     def add_inflow(self):
         return np.full(len(self.nodes), 10)
@@ -37,4 +37,6 @@ def calculate_1d_dist_matrix(positions):
             dist = abs(positions[i] - positions[j])
             distance_matrix[i, j] = dist
             distance_matrix[j, i] = dist
+            
+    return distance_matrix
 
