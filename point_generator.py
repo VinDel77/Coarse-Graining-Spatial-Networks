@@ -12,10 +12,10 @@ class System:
 
     def calculate_distance_matrix(self):
         return calculate_1d_dist_matrix(self.nodes)
-        
+
     def add_inflow(self):
         return np.full(len(self.nodes), 10)
-    
+
     def add_outflow(self):
         return np.full(len(self.nodes), 10)
 
@@ -37,6 +37,6 @@ def calculate_1d_dist_matrix(positions):
             dist = abs(positions[i] - positions[j])
             distance_matrix[i, j] = dist
             distance_matrix[j, i] = dist
-            
+
     return distance_matrix
 
