@@ -32,7 +32,7 @@ class Gravity:
     def tuning_function(self):
         a_values = []
         b_values = []
-        for i in range(100):
+        for _ in range(100):
             new_a = self.calculate_new_a_b(a=True)
             self.A = new_a
             a_values.append(new_a)
