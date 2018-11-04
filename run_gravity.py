@@ -11,45 +11,46 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Gravity:
-    def __init__(self):
-        node_number = 20
+    def __init__(self, iterations, node_number):
+        self.iterations = iterations
         self.system = pg.System(node_number)
-        self.A = np.full(node_number, 1)
-        self.B = np.full(node_number, 1)
         self.metric = self.metric_function()
+        self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
+        self.B = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
 
     def metric_function(self):
         matrix = np.zeros_like(self.system.distance_matrix)
         index_range = range(len(self.system.nodes))
+        average_distance = np.mean(self.system.distance_matrix)
         for i in index_range:
             for j in index_range[i:]:
-                metric_ij = np.exp(-self.system.distance_matrix[i,j])
+                metric_ij = np.exp(-self.system.distance_matrix[i,j] / average_distance)
                 matrix[i,j] = metric_ij
                 matrix[j, i] = metric_ij
-
         return matrix
 
     def tuning_function(self):
         a_values = []
         b_values = []
         x_axis = []
-        for _ in range(500):
-            new_a = self.calculate_new_a_b(self.A, self.system.inflow, self.metric, sum_over='i')
-            self.A = new_a
+        for _ in range(self.iterations):
+            new_a = self.calculate_new_a_b(self.B, self.system.inflow, self.metric, sum_over='i')
             a_values.append(new_a[0])
 
-            new_b = self.calculate_new_a_b(self.B, self.system.outflow, self.metric, sum_over='j')
-            self.B = new_b
+            new_b = self.calculate_new_a_b(self.A, self.system.outflow, self.metric, sum_over='j')
             b_values.append(new_b[0])
             x_axis.append(_)
+
+            self.B = new_b
+            self.A = new_a
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
 
-        print(len(a_values))
-        print(len(b_values))
-        ax.plot(x_axis, a_values, 'ro')
-        ax.plot(x_axis, b_values, 'bo')
+        ax.plot(x_axis, a_values, 'ro', label='A values')
+        ax.plot(x_axis, b_values, 'bo', label='B values')
+
+        plt.legend()
 
         plt.show()
 
@@ -62,5 +63,4 @@ class Gravity:
             metric = metric as a 2D symmetric array
             sum_over = Sum over row (i) or column (j) of metric
         """
-        return np.einsum('ij,{}'.format(sum_over), metric, x * f)
-
+        return 1.0 / np.einsum('ij,{}'.format(sum_over), metric, x * f)

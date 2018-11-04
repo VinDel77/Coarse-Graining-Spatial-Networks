@@ -1,11 +1,12 @@
 import numpy as np
 
+
 class System:
     def __init__(self, node_number):
         self.nodes = self.generate_nodes(node_number)
         self.distance_matrix = self.calculate_distance_matrix()
-        self.inflow = self.add_inflow()
-        self.outflow = self.add_outflow()
+        self.inflow = self.add_inflow(10)
+        self.outflow = self.add_outflow(10)
 
     def generate_nodes(self, node_number):
         return np.linspace(0, 100, node_number)
@@ -13,11 +14,19 @@ class System:
     def calculate_distance_matrix(self):
         return calculate_1d_dist_matrix(self.nodes)
 
-    def add_inflow(self):
-        return np.full(len(self.nodes), 10)
+    def add_inflow(self, avg_value):
+        """
+        Generate outflow as a random sample averaging on avg_value
+        avg_value : float
+        """
+        return np.random.normal(avg_value, avg_value / 10.0, len(self.nodes))
 
-    def add_outflow(self):
-        return np.full(len(self.nodes), 10)
+    def add_outflow(self, avg_value):
+        """
+        Generate outflow as a random sample averaging on avg_value
+        avg_value : float
+        """
+        return np.random.normal(avg_value, avg_value / 10.0, len(self.nodes))
 
 
 def calculate_1d_dist_matrix(positions):
@@ -39,4 +48,3 @@ def calculate_1d_dist_matrix(positions):
             distance_matrix[j, i] = dist
 
     return distance_matrix
-
