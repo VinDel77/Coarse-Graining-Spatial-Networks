@@ -32,6 +32,7 @@ class Gravity:
     def tuning_function(self):
         a_values = []
         b_values = []
+        proportions_values = []
         x_axis = []
         for _ in range(self.iterations):
             new_a = self.calculate_new_a_b(self.B, self.system.inflow, self.metric, sum_over='i')
@@ -39,6 +40,8 @@ class Gravity:
 
             new_b = self.calculate_new_a_b(self.A, self.system.outflow, self.metric, sum_over='j')
             b_values.append(new_b[0])
+            proportion = new_a[0]*new_b[0]
+            proportions_values.append(proportion)
             x_axis.append(_)
 
             self.B = new_b
@@ -49,6 +52,7 @@ class Gravity:
 
         ax.plot(x_axis, a_values, 'ro', label='A values')
         ax.plot(x_axis, b_values, 'bo', label='B values')
+        ax.plot(x_axis, proportions_values, 'ko', label='Ratio of A*B')
 
         plt.legend()
 
