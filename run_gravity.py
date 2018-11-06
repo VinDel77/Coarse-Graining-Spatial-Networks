@@ -32,31 +32,58 @@ class Gravity:
     def tuning_function(self):
         a_values = []
         b_values = []
-        proportions_values = []
-        x_axis = []
+        products = []
         for _ in range(self.iterations):
             new_a = self.calculate_new_a_b(self.B, self.system.inflow, self.metric, sum_over='i')
-            a_values.append(new_a[0])
-
-            new_b = self.calculate_new_a_b(self.A, self.system.outflow, self.metric, sum_over='j')
-            b_values.append(new_b[0])
-            proportion = new_a[0]*new_b[0]
-            proportions_values.append(proportion)
-            x_axis.append(_)
-
-            self.B = new_b
+            new_a = self.normalise_vector(new_a)
+            a_values.append(new_a)
             self.A = new_a
 
+            new_b = self.calculate_new_a_b(self.A, self.system.outflow, self.metric, sum_over='j')
+            b_values.append(new_b)
+            self.B = new_b
+
+            products.append(new_a * new_b)
+            if self.converging(np.array(products), 0.00001):
+                break
+
+        a_values = np.array(a_values)
+        b_values = np.array(b_values)
+        products = np.array(products)
+
+        self.plot_results(a_values, b_values, products)
+
+        return a_values, b_values, products
+
+
+    def plot_results(self, a_values, b_values, products):
+        x_axis = range(len(a_values))
         fig = plt.figure()
         ax = fig.add_subplot(111)
 
-        ax.plot(x_axis, a_values, 'ro', label='A values')
-        ax.plot(x_axis, b_values, 'bo', label='B values')
-        ax.plot(x_axis, proportions_values, 'ko', label='Ratio of A*B')
+        ax.plot(x_axis, a_values[:, 0], 'ro', label='A values')
+        ax.plot(x_axis, b_values[:, 0], 'bo', label='B values')
+
+        plt.legend()
+
+        ax2 = ax.twinx()
+        ax2.plot(x_axis, products[:, 0], 'ko', label='Ratio of A*B')
 
         plt.legend()
 
         plt.show()
+
+    def converging(self, product_ab_list, tolerance):
+        if len(product_ab_list) < 5:
+            return False
+
+        value_range = np.ptp(product_ab_list[-5:, :], axis=0)
+        if np.any(value_range > tolerance):
+            return False
+        return True
+
+    def normalise_vector(self, vector):
+        return vector / np.linalg.norm(vector)
 
     def calculate_new_a_b(self, x, f, metric, sum_over='i'):
         """
