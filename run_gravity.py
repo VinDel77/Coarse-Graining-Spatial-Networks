@@ -34,7 +34,6 @@ class Gravity:
         products = []
         for _ in range(iterations):
             new_a = self.calculate_new_a_b(self.B, self.system.inflow, self.metric, sum_over='i')
-            new_a = self.normalise_vector(new_a)
             a_values.append(new_a)
             self.A = new_a
 
@@ -50,8 +49,7 @@ class Gravity:
         b_values = np.array(b_values)
         products = np.array(products)
 
-        self.plot_results(a_values, b_values, products)
-
+#        self.plot_results(a_values, b_values, products)
         return a_values, b_values, products
 
 
