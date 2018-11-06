@@ -11,8 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Gravity:
-    def __init__(self, iterations, node_number):
-        self.iterations = iterations
+    def __init__(self, node_number):
         self.system = pg.System(node_number)
         self.metric = self.metric_function()
         self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
@@ -29,11 +28,11 @@ class Gravity:
                 matrix[j, i] = metric_ij
         return matrix
 
-    def tuning_function(self):
+    def tuning_function(self, iterations=1000, tolerance=0.0000001):
         a_values = []
         b_values = []
         products = []
-        for _ in range(self.iterations):
+        for _ in range(iterations):
             new_a = self.calculate_new_a_b(self.B, self.system.inflow, self.metric, sum_over='i')
             new_a = self.normalise_vector(new_a)
             a_values.append(new_a)
@@ -44,7 +43,7 @@ class Gravity:
             self.B = new_b
 
             products.append(new_a * new_b)
-            if self.converging(np.array(products), 0.00001):
+            if self.converging(np.array(products), tolerance):
                 break
 
         a_values = np.array(a_values)
