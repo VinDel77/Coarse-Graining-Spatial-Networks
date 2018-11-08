@@ -12,7 +12,8 @@ import matplotlib.pyplot as plt
 
 class Gravity:
     def __init__(self, node_number):
-        self.system = pg.System(node_number)
+        self.system = pg.System()
+        self.system.random_system(node_number)
         self.metric = self.metric_function()
         self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
         self.B = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
@@ -96,14 +97,14 @@ class Gravity:
 
 class Coarse_graining:
     """
-    Throw an imaginary grid on the nodes and regroup. 
+    Throw an imaginary grid on the nodes and regroup.
     Then return the new metric and other properties of the
     original system.
     """
     def __init__(self, system, number_of_areas):
         self.system = system
         self.boundaries = np.linspace(0, 100 + 1, number_of_areas + 1)
-        
+
     def generate_new_system(self):
         distance = self.distance
         bins = self.boundaries
@@ -112,10 +113,10 @@ class Coarse_graining:
         bin_number_to_outflow = np.vstack((np.digitize(distance, bins), self.outflow)).T
         bin_number_to_inflow = np.vstack((((np.digitize(distance, bins), self.inflow)).T))
         new_mean_distances = np.array([np.mean(A[A[:, 0] == i, 1]) for i in np.unique(A[:, 0])])
-        
-        
 
-    
-    
-        
-    
+
+
+
+
+
+
