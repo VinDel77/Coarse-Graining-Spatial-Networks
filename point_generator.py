@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct 28 16:31:57 2018
+
+@author: ellereyireland1 & vinul_wimalaweera
+"""
+
 import numpy as np
 
 
@@ -16,7 +24,7 @@ class System:
 
     def add_inflow(self, avg_value):
         """
-        Generate outflow as a random sample averaging on avg_value
+        Generate inflow as a random sample averaging on avg_value
         avg_value : float
         """
         return np.random.normal(avg_value, avg_value / 10.0, len(self.nodes))

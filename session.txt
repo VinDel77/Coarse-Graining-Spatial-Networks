@@ -1,0 +1,570 @@
+Last login: Wed Nov  7 13:42:54 on ttys001
+ellereyireland1@Ellereys-MBP-2 ~ $ cd /Users/ellereyireland1/Documents/University/Thireelelelellerellerellereyireellerellereyirellerellereyiellereyireland1@Ellereys-MBP-2 Coarse-Graining-Spatial-Networks (coarse_graining) $ ipython 
+Python 3.6.6 |Anaconda custom (64-bit)| (default, Jun 28 2018, 11:07:29) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.0.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: import run_gravity as g                                                                                                             
+
+In [2]: import importlib                                                                                                                    
+
+In [3]: gravity = g.Gravity(10)                                                                                                             
+
+In [4]: gravity                                                                                                                             
+Out[4]: <run_gravity.Gravity at 0x125735a20>
+
+In [5]: g.system                                                                                                                            
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-5-a27ba336b807> in <module>
+----> 1 g.system
+
+AttributeError: module 'run_gravity' has no attribute 'system'
+
+In [6]: gravity.system                                                                                                                      
+Out[6]: <point_generator.System at 0x125735ba8>
+
+In [7]: gravity.metric                                                                                                                      
+Out[7]: 
+array([[1.        , 0.73857671, 0.54549556, 0.40289032, 0.29756541,
+        0.21977488, 0.16232061, 0.11988622, 0.08854517, 0.0653974 ],
+       [0.73857671, 1.        , 0.73857671, 0.54549556, 0.40289032,
+        0.29756541, 0.21977488, 0.16232061, 0.11988622, 0.08854517],
+       [0.54549556, 0.73857671, 1.        , 0.73857671, 0.54549556,
+        0.40289032, 0.29756541, 0.21977488, 0.16232061, 0.11988622],
+       [0.40289032, 0.54549556, 0.73857671, 1.        , 0.73857671,
+        0.54549556, 0.40289032, 0.29756541, 0.21977488, 0.16232061],
+       [0.29756541, 0.40289032, 0.54549556, 0.73857671, 1.        ,
+        0.73857671, 0.54549556, 0.40289032, 0.29756541, 0.21977488],
+       [0.21977488, 0.29756541, 0.40289032, 0.54549556, 0.73857671,
+        1.        , 0.73857671, 0.54549556, 0.40289032, 0.29756541],
+       [0.16232061, 0.21977488, 0.29756541, 0.40289032, 0.54549556,
+        0.73857671, 1.        , 0.73857671, 0.54549556, 0.40289032],
+       [0.11988622, 0.16232061, 0.21977488, 0.29756541, 0.40289032,
+        0.54549556, 0.73857671, 1.        , 0.73857671, 0.54549556],
+       [0.08854517, 0.11988622, 0.16232061, 0.21977488, 0.29756541,
+        0.40289032, 0.54549556, 0.73857671, 1.        , 0.73857671],
+       [0.0653974 , 0.08854517, 0.11988622, 0.16232061, 0.21977488,
+        0.29756541, 0.40289032, 0.54549556, 0.73857671, 1.        ]])
+
+In [8]: gravity.nodes                                                                                                                       
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-8-90a873998425> in <module>
+----> 1 gravity.nodes
+
+AttributeError: 'Gravity' object has no attribute 'nodes'
+
+In [9]: gravity.distance_matrix                                                                                                             
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-9-cef80bcd9000> in <module>
+----> 1 gravity.distance_matrix
+
+AttributeError: 'Gravity' object has no attribute 'distance_matrix'
+
+In [10]: gravity.nodes                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-10-90a873998425> in <module>
+----> 1 gravity.nodes
+
+AttributeError: 'Gravity' object has no attribute 'nodes'
+
+In [11]: gravity.A                                                                                                                          
+Out[11]: 
+array([-0.09212555,  0.2875803 ,  0.37732446,  0.31491325,  0.51816103,
+        0.46697429,  0.81015381,  0.47402778,  0.24324972,  0.32607924])
+
+In [12]: gravity.B                                                                                                                          
+Out[12]: 
+array([0.284347  , 0.54698511, 0.38579616, 0.33684777, 0.91028142,
+       0.45292163, 0.94704435, 0.45173339, 0.28090242, 0.87291372])
+
+In [13]: import point_generator as pg                                                                                                       
+
+In [14]: gravity.nodes                                                                                                                      
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-14-90a873998425> in <module>
+----> 1 gravity.nodes
+
+AttributeError: 'Gravity' object has no attribute 'nodes'
+
+In [15]: gravity.distance_matrix()                                                                                                          
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-15-b2a44c522bb1> in <module>
+----> 1 gravity.distance_matrix()
+
+AttributeError: 'Gravity' object has no attribute 'distance_matrix'
+
+In [16]: gravity.distance_matrix                                                                                                            
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-16-cef80bcd9000> in <module>
+----> 1 gravity.distance_matrix
+
+AttributeError: 'Gravity' object has no attribute 'distance_matrix'
+
+In [17]: gravity.system.distance_matrix                                                                                                     
+Out[17]: 
+array([[  0.        ,  11.11111111,  22.22222222,  33.33333333,
+         44.44444444,  55.55555556,  66.66666667,  77.77777778,
+         88.88888889, 100.        ],
+       [ 11.11111111,   0.        ,  11.11111111,  22.22222222,
+         33.33333333,  44.44444444,  55.55555556,  66.66666667,
+         77.77777778,  88.88888889],
+       [ 22.22222222,  11.11111111,   0.        ,  11.11111111,
+         22.22222222,  33.33333333,  44.44444444,  55.55555556,
+         66.66666667,  77.77777778],
+       [ 33.33333333,  22.22222222,  11.11111111,   0.        ,
+         11.11111111,  22.22222222,  33.33333333,  44.44444444,
+         55.55555556,  66.66666667],
+       [ 44.44444444,  33.33333333,  22.22222222,  11.11111111,
+          0.        ,  11.11111111,  22.22222222,  33.33333333,
+         44.44444444,  55.55555556],
+       [ 55.55555556,  44.44444444,  33.33333333,  22.22222222,
+         11.11111111,   0.        ,  11.11111111,  22.22222222,
+         33.33333333,  44.44444444],
+       [ 66.66666667,  55.55555556,  44.44444444,  33.33333333,
+         22.22222222,  11.11111111,   0.        ,  11.11111111,
+         22.22222222,  33.33333333],
+       [ 77.77777778,  66.66666667,  55.55555556,  44.44444444,
+         33.33333333,  22.22222222,  11.11111111,   0.        ,
+         11.11111111,  22.22222222],
+       [ 88.88888889,  77.77777778,  66.66666667,  55.55555556,
+         44.44444444,  33.33333333,  22.22222222,  11.11111111,
+          0.        ,  11.11111111],
+       [100.        ,  88.88888889,  77.77777778,  66.66666667,
+         55.55555556,  44.44444444,  33.33333333,  22.22222222,
+         11.11111111,   0.        ]])
+
+In [18]: np.linspace(0, 100, node_number)                                                                                                   
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-18-d80e8a1aecf7> in <module>
+----> 1 np.linspace(0, 100, node_number)
+
+NameError: name 'np' is not defined
+
+In [19]: import numpy as np                                                                                                                 
+
+In [20]: np.linspace(0, 100, node_number)                                                                                                   
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+<ipython-input-20-d80e8a1aecf7> in <module>
+----> 1 np.linspace(0, 100, node_number)
+
+NameError: name 'node_number' is not defined
+
+In [21]: np.linspace(0, 100, 5)                                                                                                             
+Out[21]: array([  0.,  25.,  50.,  75., 100.])
+
+In [22]: np.linspace(0, 100, 6)                                                                                                             
+Out[22]: array([  0.,  20.,  40.,  60.,  80., 100.])
+
+In [23]: gravity.system.nodes                                                                                                               
+Out[23]: 
+array([  0.        ,  11.11111111,  22.22222222,  33.33333333,
+        44.44444444,  55.55555556,  66.66666667,  77.77777778,
+        88.88888889, 100.        ])
+
+In [24]: d = gravity.system.nodes                                                                                                           
+
+In [25]: d                                                                                                                                  
+Out[25]: 
+array([  0.        ,  11.11111111,  22.22222222,  33.33333333,
+        44.44444444,  55.55555556,  66.66666667,  77.77777778,
+        88.88888889, 100.        ])
+
+In [26]: freq, bins = np.histogram(d, np.arange(0,100))                                                                                     
+
+In [27]: freq                                                                                                                               
+Out[27]: 
+array([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+In [28]: freq, bins = np.histogram(d, np.arange(0,5))                                                                                       
+
+In [29]: freq                                                                                                                               
+Out[29]: array([1, 0, 0, 0])
+
+In [30]: np.arange(0,5)                                                                                                                     
+Out[30]: array([0, 1, 2, 3, 4])
+
+In [31]: np.arange(0,100,3)                                                                                                                 
+Out[31]: 
+array([ 0,  3,  6,  9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48,
+       51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99])
+
+In [32]: freq, bins = np.histogram(d, np.arange(0,100, 20))                                                                                 
+
+In [33]: freq                                                                                                                               
+Out[33]: array([2, 2, 2, 2])
+
+In [34]: freq, bins = np.histogram(d, np.arange(0,120, 20))                                                                                 
+
+In [35]: freq                                                                                                                               
+Out[35]: array([2, 2, 2, 2, 2])
+
+In [36]: bins                                                                                                                               
+Out[36]: array([  0,  20,  40,  60,  80, 100])
+
+In [37]: freq[0]                                                                                                                            
+Out[37]: 2
+
+In [38]: d                                                                                                                                  
+Out[38]: 
+array([  0.        ,  11.11111111,  22.22222222,  33.33333333,
+        44.44444444,  55.55555556,  66.66666667,  77.77777778,
+        88.88888889, 100.        ])
+
+In [39]: bins = np.linspace(0,100, 6 )                                                                                                      
+
+In [40]: bins                                                                                                                               
+Out[40]: array([  0.,  20.,  40.,  60.,  80., 100.])
+
+In [41]: a = np.digitize(d,bins)                                                                                                            
+
+In [42]: a                                                                                                                                  
+Out[42]: array([1, 1, 2, 2, 3, 3, 4, 4, 5, 6])
+
+In [43]: a = np.digitize(d,bins, True)                                                                                                      
+
+In [44]: a                                                                                                                                  
+Out[44]: array([0, 1, 2, 2, 3, 3, 4, 4, 5, 5])
+
+In [45]: new_distances = []                                                                                                                 
+
+In [46]: a = np.digitize(d,bins, right = True)                                                                                              
+
+In [47]: a                                                                                                                                  
+Out[47]: array([0, 1, 2, 2, 3, 3, 4, 4, 5, 5])
+
+In [48]: d                                                                                                                                  
+Out[48]: 
+array([  0.        ,  11.11111111,  22.22222222,  33.33333333,
+        44.44444444,  55.55555556,  66.66666667,  77.77777778,
+        88.88888889, 100.        ])
+
+In [49]: bins = np.linspace(0,101, 6)                                                                                                       
+
+In [50]: bins                                                                                                                               
+Out[50]: array([  0. ,  20.2,  40.4,  60.6,  80.8, 101. ])
+
+In [51]: a = np.digitize(d, bins, True)                                                                                                     
+
+In [52]: a                                                                                                                                  
+Out[52]: array([0, 1, 2, 2, 3, 3, 4, 4, 5, 5])
+
+In [53]: a = np.digitize(d, bins,False,  True)                                                                                              
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-53-bd8300ee2bbd> in <module>
+----> 1 a = np.digitize(d, bins,False,  True)
+
+TypeError: digitize() takes at most 3 arguments (4 given)
+
+In [54]: a = np.digitize(d, bins, left = True)                                                                                              
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-54-adfe52d77cc3> in <module>
+----> 1 a = np.digitize(d, bins, left = True)
+
+TypeError: 'left' is an invalid keyword argument for this function
+
+In [55]: a = np.digitize(d, bins, True)                                                                                                     
+
+In [56]: a                                                                                                                                  
+Out[56]: array([0, 1, 2, 2, 3, 3, 4, 4, 5, 5])
+
+In [57]: a = np.digitize(d, bins, False)                                                                                                    
+
+In [58]: a                                                                                                                                  
+Out[58]: array([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])
+
+In [59]: a[0]                                                                                                                               
+Out[59]: 1
+
+In [60]: range(len(d))                                                                                                                      
+Out[60]: range(0, 10)
+
+In [61]: chl  = np.array([0.4,0.1,0.04,0.05,0.4,0.2,0.6,0.09,0.23,0.43,0.65,0.22,0.12,0.2,0.33]) 
+    ...: depth = np.array([0.1,0.3,0.31,0.44,0.49,1.1,1.145,1.33,1.49,1.53,1.67,1.79,1.87,2.1,2.3])                                         
+
+In [62]: bins = np.array([0,0.5,1.0,1.5,2.0,2.5])                                                                                           
+
+In [63]: A = np.vstack((np.digitize(depth, bins), chl)).T                                                                                   
+
+In [64]: a                                                                                                                                  
+Out[64]: array([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])
+
+In [65]: A                                                                                                                                  
+Out[65]: 
+array([[1.  , 0.4 ],
+       [1.  , 0.1 ],
+       [1.  , 0.04],
+       [1.  , 0.05],
+       [1.  , 0.4 ],
+       [3.  , 0.2 ],
+       [3.  , 0.6 ],
+       [3.  , 0.09],
+       [3.  , 0.23],
+       [4.  , 0.43],
+       [4.  , 0.65],
+       [4.  , 0.22],
+       [4.  , 0.12],
+       [5.  , 0.2 ],
+       [5.  , 0.33]])
+
+In [66]:  bins = np.linspace(0,101, 6)                                                                                                      
+
+In [67]: a                                                                                                                                  
+Out[67]: array([1, 1, 2, 2, 3, 3, 4, 4, 5, 5])
+
+In [68]: A = np.vstack((np.digitize(d, bins), d)).T                                                                                         
+
+In [69]: A                                                                                                                                  
+Out[69]: 
+array([[  1.        ,   0.        ],
+       [  1.        ,  11.11111111],
+       [  2.        ,  22.22222222],
+       [  2.        ,  33.33333333],
+       [  3.        ,  44.44444444],
+       [  3.        ,  55.55555556],
+       [  4.        ,  66.66666667],
+       [  4.        ,  77.77777778],
+       [  5.        ,  88.88888889],
+       [  5.        , 100.        ]])
+
+In [70]: res_lst = [np.mean(A[A[:, 0] == i, 1]) for i in range(len(bins))]                                                                  
+/anaconda3/lib/python3.6/site-packages/numpy/core/fromnumeric.py:2920: RuntimeWarning: Mean of empty slice.
+  out=out, **kwargs)
+/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:85: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+
+In [71]: res_lst = [np.average(A[A[:, 0] == i, 1]) for i in range(len(bins))]                                                               
+/anaconda3/lib/python3.6/site-packages/numpy/lib/function_base.py:356: RuntimeWarning: Mean of empty slice.
+  avg = a.mean(axis)
+/anaconda3/lib/python3.6/site-packages/numpy/core/_methods.py:85: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+
+In [72]: res = {bins[int(i)]: np.mean(A[A[:, 0] == i, 1]) for i in np.unique(A[:, 0])}                                                      
+
+In [73]: res                                                                                                                                
+Out[73]: 
+{20.2: 5.555555555555555,
+ 40.4: 27.777777777777775,
+ 60.599999999999994: 50.0,
+ 80.8: 72.22222222222221,
+ 101.0: 94.44444444444444}
+
+In [74]: res = {np.mean(A[A[:, 0] == i, 1]) for i in np.unique(A[:, 0])}                                                                    
+
+In [75]: res                                                                                                                                
+Out[75]: 
+{5.555555555555555,
+ 27.777777777777775,
+ 50.0,
+ 72.22222222222221,
+ 94.44444444444444}
+
+In [76]: res = np.array([np.mean(A[A[:, 0] == i, 1]) for i in np.unique(A[:, 0])])                                                          
+
+In [77]: res                                                                                                                                
+Out[77]: array([ 5.55555556, 27.77777778, 50.        , 72.22222222, 94.44444444])
+
+In [78]: A = np.vstack((np.digitize(depth, bins), chl))                                                                                     
+
+In [79]: A                                                                                                                                  
+Out[79]: 
+array([[1.  , 1.  , 1.  , 1.  , 1.  , 1.  , 1.  , 1.  , 1.  , 1.  , 1.  ,
+        1.  , 1.  , 1.  , 1.  ],
+       [0.4 , 0.1 , 0.04, 0.05, 0.4 , 0.2 , 0.6 , 0.09, 0.23, 0.43, 0.65,
+        0.22, 0.12, 0.2 , 0.33]])
+
+In [80]: A = np.vstack((np.digitize(d, bins), d))                                                                                           
+
+In [81]: A                                                                                                                                  
+Out[81]: 
+array([[  1.        ,   1.        ,   2.        ,   2.        ,
+          3.        ,   3.        ,   4.        ,   4.        ,
+          5.        ,   5.        ],
+       [  0.        ,  11.11111111,  22.22222222,  33.33333333,
+         44.44444444,  55.55555556,  66.66666667,  77.77777778,
+         88.88888889, 100.        ]])
+
+In [82]: A = np.vstack((np.digitize(d, bins), d)).T                                                                                         
+
+In [83]: A                                                                                                                                  
+Out[83]: 
+array([[  1.        ,   0.        ],
+       [  1.        ,  11.11111111],
+       [  2.        ,  22.22222222],
+       [  2.        ,  33.33333333],
+       [  3.        ,  44.44444444],
+       [  3.        ,  55.55555556],
+       [  4.        ,  66.66666667],
+       [  4.        ,  77.77777778],
+       [  5.        ,  88.88888889],
+       [  5.        , 100.        ]])
+
+In [84]: res                                                                                                                                
+Out[84]: array([ 5.55555556, 27.77777778, 50.        , 72.22222222, 94.44444444])
+
+In [85]: %save start_coarse_graining_ipython_history                                                                                        
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [86]: %save                                                                                                                              
+UsageError: Missing filename.
+
+In [87]: %save coarse_graining_start                                                                                                        
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [88]: %save -r coarse_graining_start                                                                                                     
+File `coarse_graining_start.ipy` exists. Overwrite (y/[N])?  y 
+File `coarse_graining_start.ipy` exists. Overwrite (y/[N])?  y
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [89]: %save -r coarse_graining_start                                                                                                     
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [90]: %save -r coarse_graining_start                                                                                                     
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [91]: %save -r coarse_grainingstart                                                                                                      
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [92]: %save my_useful_session                                                                                                            
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [93]: %save -f useful_session                                                                                                            
+'' was not found in history, as a file, url, nor in the user namespace.
+
+In [94]: %save -f useful_session 1-84                                                                                                       
+The following commands were written to file `useful_session.py`:
+import run_gravity as g 
+import importlib
+gravity = g.Gravity(10)
+gravity 
+g.system
+gravity.system
+gravity.metric
+gravity.nodes
+gravity.distance_matrix
+gravity.nodes
+gravity.A
+gravity.B
+import point_generator as pg
+gravity.nodes
+gravity.distance_matrix()
+gravity.distance_matrix
+gravity.system.distance_matrix
+np.linspace(0, 100, node_number)
+import numpy as np 
+np.linspace(0, 100, node_number)
+np.linspace(0, 100, 5)
+np.linspace(0, 100, 6)
+gravity.system.nodes
+d = gravity.system.nodes
+d 
+freq, bins = np.histogram(d, np.arange(0,100))
+freq
+freq, bins = np.histogram(d, np.arange(0,5))
+freq 
+np.arange(0,5)
+np.arange(0,100,3)
+freq, bins = np.histogram(d, np.arange(0,100, 20))
+freq
+freq, bins = np.histogram(d, np.arange(0,120, 20))
+freq
+bins 
+freq[0]
+d 
+bins = np.linspace(0,100, 6 )
+bins 
+a = np.digitize(d,bins)
+a
+a = np.digitize(d,bins, True)
+a 
+new_distances = []
+a = np.digitize(d,bins, right = True)
+a 
+d
+bins = np.linspace(0,101, 6)
+bins 
+a = np.digitize(d, bins, True)
+a 
+a = np.digitize(d, bins,False,  True)
+a = np.digitize(d, bins, left = True)
+a = np.digitize(d, bins, True)
+a
+a = np.digitize(d, bins, False)
+a 
+a[0]
+range(len(d))
+chl  = np.array([0.4,0.1,0.04,0.05,0.4,0.2,0.6,0.09,0.23,0.43,0.65,0.22,0.12,0.2,0.33])
+depth = np.array([0.1,0.3,0.31,0.44,0.49,1.1,1.145,1.33,1.49,1.53,1.67,1.79,1.87,2.1,2.3])
+bins = np.array([0,0.5,1.0,1.5,2.0,2.5])
+A = np.vstack((np.digitize(depth, bins), chl)).T
+a
+A
+bins = np.linspace(0,101, 6) 
+a 
+A = np.vstack((np.digitize(d, bins), d)).T
+A
+res_lst = [np.mean(A[A[:, 0] == i, 1]) for i in range(len(bins))]
+res_lst = [np.average(A[A[:, 0] == i, 1]) for i in range(len(bins))]
+res = {bins[int(i)]: np.mean(A[A[:, 0] == i, 1]) for i in np.unique(A[:, 0])}
+res 
+res = {np.mean(A[A[:, 0] == i, 1]) for i in np.unique(A[:, 0])}
+res
+res = np.array([np.mean(A[A[:, 0] == i, 1]) for i in np.unique(A[:, 0])])
+res
+A = np.vstack((np.digitize(depth, bins), chl))
+A
+A = np.vstack((np.digitize(d, bins), d))
+A
+A = np.vstack((np.digitize(d, bins), d)).T
+A
+res
+
+In [95]: exit                                                                                                                               
+ellereyireland1@Ellereys-MBP-2 Coarse-Graining-Spatial-Networks (coarse_graining) $ ipython 
+Python 3.6.6 |Anaconda custom (64-bit)| (default, Jun 28 2018, 11:07:29) 
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.0.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: a = 132                                                                                                                             
+
+In [2]: b = 12                                                                                                                              
+
+In [3]: %save -r test 1-9999                                                                                                                
+The following commands were written to file `test.ipy`:
+a = 132
+b = 12
+%save -r test 1-9999
+
+In [4]: exit                                                                                                                                
+ellereyireland1@Ellereys-MBP-2 Coarse-Graining-Spatial-Networks (coarse_graining) $ ls 
+README.md		point_generator.py	test.ipy		useful_session.py
+__pycache__		run_gravity.py		useful_session.ipy
+ellereyireland1@Ellereys-MBP-2 Coarse-Graining-Spatial-Networks (coarse_graining) $ ipython useful_session.ipy
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+~/Documents/University/Third_year/BSc_project/Code/Coarse-Graining-Spatial-Networks/useful_session.ipy in <module>
+     11 gravity = g.Gravity(10)
+     12 gravity
+---> 13 g.system
+     14 gravity.system
+     15 gravity.metric
+
+AttributeError: module 'run_gravity' has no attribute 'system'
+ellereyireland1@Ellereys-MBP-2 Coarse-Graining-Spatial-Networks (coarse_graining) $ ipython test.ipy
+File `test.ipy` exists. Overwrite (y/[N])?  n
+Operation cancelled.
+ellereyireland1@Ellereys-MBP-2 Coarse-Graining-Spatial-Networks (coarse_graining) $ 

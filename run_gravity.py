@@ -92,3 +92,30 @@ class Gravity:
             sum_over = Sum over row (i) or column (j) of metric
         """
         return 1.0 / np.einsum('ij,{}'.format(sum_over), metric, x * f)
+
+
+class Coarse_graining:
+    """
+    Throw an imaginary grid on the nodes and regroup. 
+    Then return the new metric and other properties of the
+    original system.
+    """
+    def __init__(self, system, number_of_areas):
+        self.system = system
+        self.boundaries = np.linspace(0, 100 + 1, number_of_areas + 1)
+        
+    def generate_new_system(self):
+        distance = self.distance
+        bins = self.boundaries
+        a = np.digitize(distance, bins)
+        bin_number_to_position = np.vstack((np.digitize(distance, bins), distance)).T
+        bin_number_to_outflow = np.vstack((np.digitize(distance, bins), self.outflow)).T
+        bin_number_to_inflow = np.vstack((((np.digitize(distance, bins), self.inflow)).T))
+        new_mean_distances = np.array([np.mean(A[A[:, 0] == i, 1]) for i in np.unique(A[:, 0])])
+        
+        
+
+    
+    
+        
+    

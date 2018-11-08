@@ -1,0 +1,4 @@
+# coding: utf-8
+a = 132
+b = 12
+%save -r test 1-9999
