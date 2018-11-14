@@ -29,8 +29,8 @@ class Coarse_graining:
 
         return node_position, inflow, outflow
 
-    def centre_of_mass(nodes, masses):
-        return np.sum(nodes * masses, axis=0) / np.sum(masses)
+    def centre_of_mass(self, nodes, masses):
+        return np.dot(masses, nodes) / np.sum(masses)
 
     def generate_new_system(self, com=True):
         nodes = self.system.nodes
