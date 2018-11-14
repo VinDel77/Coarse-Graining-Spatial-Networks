@@ -47,10 +47,10 @@ class System:
         self.outflow = outflow
 
     def generate_nodes(self, node_number):
-        return np.linspace(0, 100, node_number)
+        return np.random.rand(node_number, 2)
 
     def calculate_distance_matrix(self):
-        return calculate_1d_dist_matrix(self.nodes)
+        return calculate_2d_dist_matrix(self.nodes)
 
     def add_inflow(self, avg_value):
         """
@@ -67,7 +67,7 @@ class System:
         return np.random.normal(avg_value, avg_value / 10.0, len(self.nodes))
 
 
-def calculate_1d_dist_matrix(positions):
+def calculate_2d_dist_matrix(positions):
     """
     Calculate the distance matrix in 1d.
 
@@ -81,7 +81,7 @@ def calculate_1d_dist_matrix(positions):
 
     for i in index_range:
         for j in index_range[i:]:
-            dist = abs(positions[i] - positions[j])
+            dist = np.linalg.norm(positions[i]  -  positions[j])
             distance_matrix[i, j] = dist
             distance_matrix[j, i] = dist
 
