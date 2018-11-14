@@ -13,12 +13,6 @@ class Coarse_graining:
         self.system = system
         self.boundaries = np.linspace(0, 1.01, number_of_areas + 1)
 
-    def stack(self, indicies, vector):
-        return np.vstack((indicies, vector)).T
-
-    def amalgamate(self, bin_vector, func):
-        return np.array([func(bin_vector[bin_vector[:, 0] == i, 1]) for i in np.unique(bin_vector[:, 0])])
-
     def elements_in_bin(self, nodes_bin_indices, bin_indices, com=False):
         indices_filter = [np.array_equal(i, bin_indices) for i in nodes_bin_indices]
         nodes_in_bin = self.system.nodes[indices_filter]
@@ -37,25 +31,6 @@ class Coarse_graining:
 
     def centre_of_mass(nodes, masses):
         return np.sum(nodes * masses, axis=0) / np.sum(masses)
-
-    def generate_new_system_old(self):
-        distance = self.system.nodes
-        bins = self.boundaries
-        nodes_bin_indicies = np.digitize(distance, bins)
-
-        bin_number_nodes = self.stack(nodes_bin_indicies, distance)
-        bin_number_outflow = self.stack(nodes_bin_indicies, self.system.outflow)
-        bin_number_inflow = self.stack(nodes_bin_indicies, self.system.inflow)
-        new_nodes = self.amalgamate(bin_number_nodes, np.mean)
-
-        new_outflow = self.amalgamate(bin_number_outflow, np.sum)
-        new_inflow = self.amalgamate(bin_number_inflow, np.sum)
-        system = pg.System()
-        system.set_nodes(new_nodes)
-        system.set_distance_matrix()
-        system.set_inflow(new_inflow)
-        system.set_outflow(new_outflow)
-        return system
 
     def generate_new_system(self, com=True):
         nodes = self.system.nodes
