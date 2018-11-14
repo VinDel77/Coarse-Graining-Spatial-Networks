@@ -1,12 +1,50 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Oct 28 16:31:57 2018
+
+@author: ellereyireland1 & vinul_wimalaweera
+"""
+
 import numpy as np
 
 
 class System:
-    def __init__(self, node_number):
+    def __init__(self):
+        self.nodes = None
+        self.distance_matrix = None
+        self.inflow = None
+        self.outflow = None
+
+    def random_system(self, node_number):
         self.nodes = self.generate_nodes(node_number)
         self.distance_matrix = self.calculate_distance_matrix()
         self.inflow = self.add_inflow(10)
         self.outflow = self.add_outflow(10)
+
+    def set_nodes(self, nodes):
+        """
+        Set nodes as 1D numpy array
+        """
+        self.nodes = nodes
+
+    def set_distance_matrix(self):
+        """
+        Set distance matrix using nodes
+        """
+        self.distance_matrix = self.calculate_distance_matrix()
+
+    def set_inflow(self, inflow):
+        """
+        Set inflow (1D numpy array)
+        """
+        self.inflow = inflow
+
+    def set_outflow(self, outflow):
+        """
+        Set outflow (1D numpy array)
+        """
+        self.outflow = outflow
 
     def generate_nodes(self, node_number):
         return np.linspace(0, 100, node_number)
@@ -16,7 +54,7 @@ class System:
 
     def add_inflow(self, avg_value):
         """
-        Generate outflow as a random sample averaging on avg_value
+        Generate inflow as a random sample averaging on avg_value
         avg_value : float
         """
         return np.random.normal(avg_value, avg_value / 10.0, len(self.nodes))
