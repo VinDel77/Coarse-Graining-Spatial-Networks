@@ -17,6 +17,9 @@ class Gravity:
         self.metric = self.metric_function()
         self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
         self.B = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
+        self.flow = self.calculate_flow_matrix()
+        self.total_flow = self.calculate_total_flow()
+
 
     def metric_function(self):
         matrix = np.zeros_like(self.system.distance_matrix)
@@ -52,6 +55,19 @@ class Gravity:
 
 #        self.plot_results(a_values, b_values, products)
         return a_values, b_values, products
+    
+    def calculate_flow_matrix(self):
+        matrix = np.zeros_like(self.system.distance_matrix)
+        index_range = range(len(self.system.nodes))
+        for i in index_range:
+            for j in index_range[i:]:
+                flow_ij = self.A[i]*self.B[j]*self.system.outflow[j]*self.system.inflow[i]
+                matrix[i,j] = flow_ij
+                matrix[j, i] = flow_ij
+        return matrix
+    
+    def calculate_total_flow(self):
+        return np.sum(self.flow)
 
 
     def plot_results(self, a_values, b_values, products):
@@ -93,5 +109,11 @@ class Gravity:
             sum_over = Sum over row (i) or column (j) of metric
         """
         return 1.0 / np.einsum('ij,{}'.format(sum_over), metric, x * f)
+    
+    def total_flow(self):
+        """
+        returns the value of the total flow across the entire system
+        """
+        return np.sum(self.outflow) + np.sum(self.inflow)
 
 
