@@ -6,7 +6,7 @@ Created on Sun Oct 28 16:31:57 2018
 @author: ellereyireland1 & vinul_wimalaweera
 """
 
-import point_generator as pg
+import system as sys
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -16,7 +16,7 @@ class Gravity:
         self.metric = None
         self.A = None
         self.B = None
-        self.total_flow = None
+        self.flow_matrix = None
 #        self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
 #        self.B = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
         
@@ -29,7 +29,7 @@ class Gravity:
         
         
     def set_flows(self):
-        self.flow = self.calculate_flow_matrix()
+        self.flow_matrix = self.calculate_flow_matrix()
         self.total_flow = self.calculate_total_flow()
 
 
@@ -82,7 +82,7 @@ class Gravity:
         return matrix
     
     def calculate_total_flow(self):
-        return np.sum(self.flow)
+        return 0.5*np.sum(self.flow_matrix)
 
 
     def plot_results(self, a_values, b_values, products):
@@ -129,7 +129,7 @@ class Gravity:
         """
         returns the value of the total flow across the entire system
         """
-        return np.sum(self.outflow) + np.sum(self.inflow)
+        return 0.5* np.sum(self.total_flow)
     
     
 

@@ -1,5 +1,5 @@
 import numpy as np
-import point_generator as pg
+import system as sys
 
 
 class Coarse_graining:
