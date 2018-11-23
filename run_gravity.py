@@ -5,10 +5,9 @@ Created on Sun Oct 28 16:31:57 2018
 
 @author: ellereyireland1 & vinul_wimalaweera
 """
-
-import system as sys
 import numpy as np
 import matplotlib.pyplot as plt
+
 
 class Gravity:
     def __init__(self):
@@ -16,22 +15,19 @@ class Gravity:
         self.metric = None
         self.A = None
         self.B = None
-        self.flow_matrix = None
-#        self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
-#        self.B = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
-        
+
     def set_system(self, system):
         self.system = system
         self.metric = self.metric_function()
         node_number = len(system.nodes)
-        self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
-        self.B = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
-        
-        
-    def set_flows(self):
-        self.flow_matrix = self.calculate_flow_matrix()
-        self.total_flow = self.calculate_total_flow()
+        self.A = np.random.normal(np.mean(self.metric), np.std(self.metric),
+                                  node_number)
+        self.B = np.random.normal(np.mean(self.metric), np.std(self.metric),
+                                  node_number)
 
+    def set_flows(self):
+        self.system.flow_matrix = self.calculate_flow_matrix()
+        self.total_flow = self.calculate_total_flow()
 
     def metric_function(self):
         matrix = np.zeros_like(self.system.distance_matrix)
@@ -39,8 +35,9 @@ class Gravity:
         average_distance = np.mean(self.system.distance_matrix)
         for i in index_range:
             for j in index_range[i:]:
-                metric_ij = np.exp(-self.system.distance_matrix[i,j] / average_distance)
-                matrix[i,j] = metric_ij
+                metric_ij = np.exp(-self.system.distance_matrix[i, j] /
+                                   average_distance)
+                matrix[i, j] = metric_ij
                 matrix[j, i] = metric_ij
         return matrix
 
@@ -70,7 +67,7 @@ class Gravity:
 #        self.plot_results(a_values, b_values, products)
         return a_values, b_values, products
 
-    
+
     def calculate_flow_matrix(self):
         matrix = np.zeros_like(self.system.distance_matrix)
         index_range = range(len(self.system.nodes))
@@ -80,9 +77,9 @@ class Gravity:
                 matrix[i,j] = flow_ij
                 matrix[j, i] = flow_ij
         return matrix
-    
+
     def calculate_total_flow(self):
-        return 0.5*np.sum(self.flow_matrix)
+        return 0.5*np.sum(self.system.flow_matrix)
 
 
     def plot_results(self, a_values, b_values, products):
@@ -124,13 +121,13 @@ class Gravity:
             sum_over = Sum over row (i) or column (j) of metric
         """
         return 1.0 / np.einsum('ij,{}'.format(sum_over), metric, x * f)
-    
+
     def total_flow(self):
         """
         returns the value of the total flow across the entire system
         """
         return 0.5* np.sum(self.total_flow)
-    
-    
+
+
 
 

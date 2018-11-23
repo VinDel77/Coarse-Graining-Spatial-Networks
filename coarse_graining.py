@@ -50,7 +50,7 @@ class Coarse_graining:
             new_inflows.append(inflow)
             new_outflows.append(outflow)
 
-        system = pg.System()
+        system = sys.System()
         system.set_nodes(np.array(new_nodes))
         system.set_distance_matrix()
         system.set_inflow(np.array(new_inflows))

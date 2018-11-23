@@ -16,12 +16,16 @@ class System:
         self.inflow = None
         self.outflow = None
         self.total_flow = None
+        self.flow_matrix = None
 
     def random_system(self, node_number):
         self.nodes = self.generate_nodes(node_number)
         self.distance_matrix = self.calculate_distance_matrix()
         self.inflow = self.add_inflow(10)
         self.outflow = self.add_outflow(10)
+
+    def set_flow_matrix(self, flow_matrix):
+        self.flow_matrix = flow_matrix
 
     def set_nodes(self, nodes):
         """
