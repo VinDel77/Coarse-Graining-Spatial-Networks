@@ -12,7 +12,7 @@ class Coarse_graining:
     def __init__(self, system, number_of_areas):
         self.system = system
         self.boundaries = np.linspace(0, 1.01, number_of_areas + 1)
-        self.total_flow = self.system.total_flow
+#        self.total_flow = self.pg.calculate_total_flow()
 
     def elements_in_bin(self, nodes_bin_indices, bin_indices, com=False):
         indices_filter = [np.array_equal(i, bin_indices) for i in nodes_bin_indices]

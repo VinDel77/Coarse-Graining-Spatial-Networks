@@ -11,12 +11,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Gravity:
-    def __init__(self, node_number):
-        self.system = pg.System()
-        self.system.random_system(node_number)
+    def __init__(self):
+        self.system = None
+        self.metric = None
+        self.A = None
+        self.B = None
+        self.total_flow = None
+#        self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
+#        self.B = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
+        
+    def set_system(self, system):
+        self.system = system
         self.metric = self.metric_function()
+        node_number = len(system.nodes)
         self.A = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
         self.B = np.random.normal(np.mean(self.metric), np.std(self.metric), node_number)
+        
+        
+    def set_flows(self):
         self.flow = self.calculate_flow_matrix()
         self.total_flow = self.calculate_total_flow()
 
@@ -52,16 +64,19 @@ class Gravity:
         a_values = np.array(a_values)
         b_values = np.array(b_values)
         products = np.array(products)
+        self.A = a_values[-1]
+        self.B = b_values[-1]
 
 #        self.plot_results(a_values, b_values, products)
         return a_values, b_values, products
+
     
     def calculate_flow_matrix(self):
         matrix = np.zeros_like(self.system.distance_matrix)
         index_range = range(len(self.system.nodes))
         for i in index_range:
             for j in index_range[i:]:
-                flow_ij = self.A[i]*self.B[j]*self.system.outflow[j]*self.system.inflow[i]
+                flow_ij = self.A[i]*self.B[j]*self.system.outflow[i]*self.system.inflow[j]*self.metric[i,j]
                 matrix[i,j] = flow_ij
                 matrix[j, i] = flow_ij
         return matrix
@@ -115,5 +130,7 @@ class Gravity:
         returns the value of the total flow across the entire system
         """
         return np.sum(self.outflow) + np.sum(self.inflow)
+    
+    
 
 

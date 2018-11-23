@@ -22,7 +22,6 @@ class System:
         self.distance_matrix = self.calculate_distance_matrix()
         self.inflow = self.add_inflow(10)
         self.outflow = self.add_outflow(10)
-        self.total_flow =  self.calculate_total_flow()
 
     def set_nodes(self, nodes):
         """
@@ -67,12 +66,6 @@ class System:
         avg_value : float
         """
         return np.random.normal(avg_value, avg_value / 10.0, len(self.nodes))
-    
-    def calculate_total_flow(self):
-        """
-        returns the value of the total flow across the entire system
-        """
-        return np.sum(self.outflow) + np.sum(self.inflow)
 
 
 def calculate_2d_dist_matrix(positions):
