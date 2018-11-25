@@ -72,10 +72,12 @@ class Gravity:
         matrix = np.zeros_like(self.system.distance_matrix)
         index_range = range(len(self.system.nodes))
         for i in index_range:
-            for j in index_range[i:]:
-                flow_ij = self.A[i]*self.B[j]*self.system.outflow[i]*self.system.inflow[j]*self.metric[i,j]
+            for j in index_range:
+                if i == j:
+                    flow_ij = 0.0
+                else:
+                    flow_ij = self.A[i]*self.B[j]*self.system.outflow[i]*self.system.inflow[j]*self.metric[i,j]
                 matrix[i,j] = flow_ij
-                matrix[j, i] = flow_ij
         return matrix
 
     def calculate_total_flow(self):

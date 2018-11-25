@@ -8,22 +8,22 @@ Created on Wed Nov 21 16:41:15 2018
 
 import system as sys
 import run_gravity as g
-import numpy as np 
+import numpy as np
 import coarse_graining as cg
 import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
-level_graining = [0]   
+level_graining = [0]
 flows = []
 
-s = g.Gravity()     
+s = g.Gravity()
 
 system = sys.System()
 system.random_system(10)
 s.set_system(system)
-s.tuning_function() 
-s.set_flows()                                                                                                               
+s.tuning_function()
+s.set_flows()
 
 flows.append(s.total_flow)
 print(s.flow_matrix)
