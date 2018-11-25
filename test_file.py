@@ -18,25 +18,29 @@ level_graining = [0]
 flows = []
 
 s = g.Gravity()
+area_size = []
+total_flows =[]
 
 system = sys.System()
-system.random_system(10)
+system.random_system(100)
 s.set_system(system)
 s.tuning_function()
 s.set_flows()
 
-flows.append(s.total_flow)
-print(s.flow_matrix)
-print(flows)
-#
-#for i in tqdm(np.arange(2,100,10)):
-#    grained_system = cg.Coarse_graining(s.system, i)
-#    new_system = grained_system.generate_new_system()
-#    s.set_system(new_system)
-#    s.tuning_function()
-#    s.set_flows()
-#    flows.append(s.total_flow)
-#    level_graining.append(i)
-#
-#plt.plot(level_graining, flows)
-#plt.show()
+area_size.append(0)
+total_flows.append(np.sum(system.flow_matrix))
+
+for i in range(2, 10):
+    coarse_grainer = cg.Coarse_graining(system, i)
+    cell_area = coarse_grainer.get_cell_area()
+
+    grained_system = coarse_grainer.generate_new_system()
+    area_size.append(cell_area)
+    total_flows.append(np.sum(grained_system.flow_matrix))
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(area_size, total_flows, 'bo')
+ax.set_xlabel("Minimum cell size")
+ax.set_ylabel("Total flow")
+plt.show()

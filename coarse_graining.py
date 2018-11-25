@@ -11,10 +11,13 @@ class Coarse_graining:
     """
     def __init__(self, system, number_of_areas):
         self.system = system
-        self.boundaries = __calculate_boundaries(number_of_areas)
+        self.boundaries = _calculate_boundaries(number_of_areas)
 
     def set_system(self, new_sytem):
         self.system = new_sytem
+
+    def get_cell_area(self):
+        return (self.boundaries[1] - self.boundaries[0]) ** 2
 
     def set_number_of_segments(self, number_areas):
         self.boundaries = __calculate_boundaries(number_areas)
@@ -41,7 +44,7 @@ class Coarse_graining:
         for i, indices in enumerate(grouped_indices):
             nodes = self.system.nodes[indices]
             mass = self.system.inflow[indices] + self.system.outflow[indices]
-            new_nodes[i] = __combined_position(nodes, mass)
+            new_nodes[i] = _combined_position(nodes, mass)
         return new_nodes
 
     def get_new_flow(self, grouped_indices):
@@ -65,7 +68,7 @@ class Coarse_graining:
         node_positions = self.get_node_positions()
         grouped_indices = self.group_node_positions(node_positions)
 
-        new_nodes = self.new_nodes(grouped_indices)
+        new_nodes = self.get_new_nodes(grouped_indices)
         new_flow = self.get_new_flow(grouped_indices)
         new_inflows = self.get_new_inflow(new_flow)
         new_outflows = self.get_new_outlfow(new_flow)
@@ -78,10 +81,12 @@ class Coarse_graining:
         system.set_flow_matrix(new_flow)
         return system
 
-def __calculate_boundaries(number_areas, box_size=1.01):
+
+def _calculate_boundaries(number_areas, box_size=1.01):
         return np.linspace(0, box_size, number_areas + 1)
 
-def __combined_position(nodes, masses=None):
+
+def _combined_position(nodes, masses=None):
     if masses is None:
         return np.mean(nodes, axis=0)
     return np.dot(masses, nodes) / np.sum(masses)
