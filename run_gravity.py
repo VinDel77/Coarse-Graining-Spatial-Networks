@@ -15,24 +15,29 @@ class Gravity:
         self.metric = None
         self.A = None
         self.B = None
+        self.cost = None
 
-    def set_system(self, system):
+    def set_system(self, system, distance = None):
         self.system = system
-        self.metric = self.metric_function()
+        self.metric = self.metric_function(distance)
         node_number = len(system.nodes)
         self.A = np.random.normal(np.mean(self.metric), np.std(self.metric),
                                   node_number)
         self.B = np.random.normal(np.mean(self.metric), np.std(self.metric),
                                   node_number)
+        
 
     def set_flows(self):
         self.system.flow_matrix = self.calculate_flow_matrix()
         self.total_flow = self.calculate_total_flow()
 
-    def metric_function(self):
+    def metric_function(self, mean_distance = None):
         matrix = np.zeros_like(self.system.distance_matrix)
         index_range = range(len(self.system.nodes))
-        average_distance = np.mean(self.system.distance_matrix)
+        if mean_distance == None:
+            average_distance = np.mean(self.system.distance_matrix)
+        else:
+            average_distance = mean_distance
         for i in index_range:
             for j in index_range[i:]:
                 metric_ij = np.exp(-self.system.distance_matrix[i, j] /
@@ -129,6 +134,10 @@ class Gravity:
         returns the value of the total flow across the entire system
         """
         return 0.5* np.sum(self.total_flow)
+    
+    def cost_function(self):
+        self.cost = np.sum(self.system.flow_matrix * self.metric)
+    
 
 
 
