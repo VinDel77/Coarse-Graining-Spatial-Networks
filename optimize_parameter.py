@@ -17,7 +17,7 @@ from tqdm import tqdm
 #Make the system
 s = g.Gravity()
 system = sys.System()
-system.random_system(100)
+system.random_system(1000)
 
 #set the lists that will contain the data points
 distances = []
@@ -27,13 +27,12 @@ cost_values =[]
 s.set_system(system)
 s.tuning_function()
 s.set_flows()
-original_flows = s.system.flow_matrix
 
 #Coarse grain the system 
 coarse_grainer = cg.Coarse_graining(system, 5)
 #cell_area = coarse_grainer.get_cell_area()
 grained_system = coarse_grainer.generate_new_system()
-
+original_flows = grained_system.flow_matrix
 #get the mean value from the distance matrix and set the bounds
 mean_dist = np.mean(grained_system.distance_matrix)
 bound = np.sqrt(mean_dist)
