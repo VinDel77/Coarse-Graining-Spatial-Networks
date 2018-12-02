@@ -59,7 +59,7 @@ class System:
         return calculate_2d_dist_matrix(self.nodes)
 
     def generate_inflow_outflow(self, node_number):
-        total_mass_list = np.random.zipf(1.1, size=node_number)
+        total_mass_list = np.random.zipf(1.005, size=node_number)
         inflow_probabilities = np.random.normal(0.5, 0.05, node_number)
 
         inflow_probabilities[inflow_probabilities < 0.0] = 0.0

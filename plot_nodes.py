@@ -28,7 +28,7 @@ def plot_nodes_weighted(nodes, masses, fig=None, colour='b'):
 
     marker_size = (masses - min_masses) / (max_masses -  min_masses)
     marker_size *= 50
-    marker_size += 5
+    marker_size += 1
     ax.scatter(nodes[:, 0], nodes[:, 1], color=colour, s=marker_size)
 
     return fig
