@@ -12,6 +12,7 @@ import numpy as np
 import coarse_graining as cg
 import numpy as np
 import matplotlib.pyplot as plt
+import save
 from tqdm import tqdm
 
 level_graining = [0]
@@ -38,6 +39,7 @@ for i in range(2, 10):
     area_size.append(cell_area)
     total_flows.append(np.sum(grained_system.flow_matrix))
 
+save.save_object([area_size, total_flows], '[area_size], [total_flow]')
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.plot(area_size, total_flows, 'bo')
