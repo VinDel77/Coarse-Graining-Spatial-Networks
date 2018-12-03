@@ -21,8 +21,9 @@ class System:
     def random_system(self, node_number):
         self.nodes = self.generate_nodes(node_number)
         self.distance_matrix = self.calculate_distance_matrix()
-        self.inflow = self.add_inflow(10)
-        self.outflow = self.add_outflow(10)
+#        self.inflow = self.add_inflow(10)
+#        self.outflow = self.add_outflow(10)
+        self.inflow, self.outflow = self.generate_inflow_outflow(node_number)
 
     def set_flow_matrix(self, flow_matrix):
         self.flow_matrix = flow_matrix
@@ -56,6 +57,18 @@ class System:
 
     def calculate_distance_matrix(self):
         return calculate_2d_dist_matrix(self.nodes)
+
+    def generate_inflow_outflow(self, node_number):
+        total_mass_list = np.random.zipf(1.005, size=node_number)
+        inflow_probabilities = np.random.normal(0.5, 0.05, node_number)
+
+        inflow_probabilities[inflow_probabilities < 0.0] = 0.0
+        inflow_probabilities[inflow_probabilities > 1.0] = 1.0
+
+        inflow = total_mass_list * inflow_probabilities
+        outflow = total_mass_list * (1.0 - inflow_probabilities)
+
+        return inflow, outflow
 
     def add_inflow(self, avg_value):
         """
