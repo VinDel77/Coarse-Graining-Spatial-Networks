@@ -17,7 +17,8 @@ from tqdm import tqdm
 #Make the system
 s = g.Gravity()
 system = sys.System()
-system.random_system(1000)
+# set normal to False to use zipf distribution for city size
+system.random_system(1000, normal=False)
 
 #set the lists that will contain the data points
 distances = []
@@ -28,7 +29,7 @@ s.set_system(system)
 s.tuning_function()
 s.set_flows()
 
-#Coarse grain the system 
+#Coarse grain the system
 coarse_grainer = cg.Coarse_graining(system, 5)
 #cell_area = coarse_grainer.get_cell_area()
 grained_system = coarse_grainer.generate_new_system()
