@@ -31,20 +31,35 @@ class Gravity:
         self.system.flow_matrix = self.calculate_flow_matrix()
         self.total_flow = self.calculate_total_flow()
 
-    def metric_function(self, mean_distance = None):
+    def metric_function(self, mean_distance = None, func = None):
         matrix = np.zeros_like(self.system.distance_matrix)
         index_range = range(len(self.system.nodes))
-        if mean_distance == None:
-            average_distance = np.mean(self.system.distance_matrix)
+        if func == None:
+            if mean_distance == None:
+                average_distance = np.mean(self.system.distance_matrix)
+            else:
+                average_distance = mean_distance
+            for i in index_range:
+                for j in index_range[i:]:
+                    metric_ij = np.exp(-self.system.distance_matrix[i, j] /
+                                       average_distance)
+                    matrix[i, j] = metric_ij
+                    matrix[j, i] = metric_ij
+            return matrix
         else:
-            average_distance = mean_distance
-        for i in index_range:
-            for j in index_range[i:]:
-                metric_ij = np.exp(-self.system.distance_matrix[i, j] /
-                                   average_distance)
-                matrix[i, j] = metric_ij
-                matrix[j, i] = metric_ij
-        return matrix
+            if mean_distance == None:
+                average_distance = np.mean(self.system.distance_matrix)
+            else:
+                average_distance = mean_distance
+            for i in index_range:
+                for j in index_range[i:]:
+                    metric_ij = func(-self.system.distance_matrix[i, j] /
+                                       average_distance)
+                    matrix[i, j] = metric_ij
+                    matrix[j, i] = metric_ij
+            return matrix
+
+        
 
     def tuning_function(self, iterations=1000, tolerance=0.0000001):
         a_values = []
