@@ -16,7 +16,7 @@ from tqdm import tqdm
 
 s = g.Gravity()
 system = sys.System()
-system.random_system(100)
+system.random_system(100, normal=False)
 
 distances = []
 cost_values =[]
