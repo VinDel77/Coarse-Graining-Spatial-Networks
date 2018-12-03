@@ -35,7 +35,6 @@ distances = list(np.linspace(0.01, mean_dist + 0.5*bound, 1000))
 distances.append(mean_dist)
 bound = np.sqrt(mean_dist)
 
-
 for d in tqdm(distances):
     s.set_system(system, distance =d)
     s.set_flows()

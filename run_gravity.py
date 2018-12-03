@@ -149,11 +149,11 @@ class Gravity:
         returns the value of the total flow across the entire system
         """
         return 0.5* np.sum(self.total_flow)
-    
-    def cost_function(self):
-        self.cost = np.sum(self.system.flow_matrix * self.metric)
-    
 
-
-
-
+    def cost_function(self, original_flows, new_flows):
+        sum_of_costs = 0
+        index_range = range(original_flows.shape[0])
+        for i in index_range:
+            for j in index_range:
+                sum_of_costs += (original_flows[i,j] - new_flows[i,j])**2
+        self.cost = sum_of_costs
