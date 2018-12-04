@@ -70,6 +70,9 @@ class System:
         inflow = total_mass_list * inflow_probabilities
         outflow = total_mass_list * (1.0 - inflow_probabilities)
 
+        inflow = inflow / np.linalg.norm(inflow)
+        outflow = outflow / np.linalg.norm(outflow)
+
         return inflow, outflow
 
     def add_inflow(self, avg_value):
