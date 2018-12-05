@@ -12,4 +12,5 @@ def save_object(obj, description=None, skip_dialogue=False):
         if to_save != 'y':
             return
         file_name = input("Enter filename: ")
-    p.dump(obj, open(file_name + ".pickle", 'wb'))
+    with open('/Users/ellereyireland1/Documents/University/Third_year/BSc_project/Code/Coarse-Graining-Spatial-Networks/data/' + file_name + ".pickle", 'wb') as f:
+        p.dump(obj, f)
