@@ -19,7 +19,7 @@ for i in tqdm(range(1,101)):
     s = g.Gravity()
     system = sys.System()
     # set normal to False to use zipf distribution for city size
-    system.random_system(1000, normal=True)
+    system.random_system(1000, normal=False)
     
     #set the lists that will contain the data points
     cell_areas = []
