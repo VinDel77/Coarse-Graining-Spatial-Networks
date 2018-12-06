@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Dec  6 14:33:30 2018
+
+@author: ellereyireland1
+"""
+
+import pickle as p 
+import numpy as np
+import system as sys
+import run_gravity as g
+import numpy as np
+import scipy as sp
+import coarse_graining as cg
+import numpy as np
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+from scipy.optimize import curve_fit
+import save
+
+def quadratic(x, a, b, c):
+    return a*x**2 + b*x + c
+
+p0 = [1, 1, 1]
+
+norm_cell_areas = p.load( open( "all_norm_cell_areas.pickle", "rb")) 
+norm_optimized_d = p.load( open( "all_norm_optimized_d.pickle", "rb"))
+zipf_cell_areas = p.load( open( "all_zipf_cell_areas.pickle", "rb"))
+zipf_optimized_d = p.load( open( "all_zipf_optimized_d.pickle", "rb"))
+
+mean_cell_areas = norm_cell_areas[0,]
+norm_mean_optimized_d = []
+norm_std_optimized_d = []
+zipf_mean_optimized_d = []
+zipf_std_optimized_d = []
+
+for i in range(20):
+    coloumn = norm_optimized_d[:,i]
+    norm_mean_optimized_d.append(np.mean(coloumn))
+    norm_std_optimized_d.append(np.std(coloumn))
+    coloumn = zipf_optimized_d[ :,i]
+    zipf_mean_optimized_d.append(np.mean(coloumn))
+    zipf_std_optimized_d.append(np.std(coloumn))
+    
+
+
+
+popt, pcov = curve_fit(quadratic, mean_cell_areas, norm_mean_optimized_d, p0=p0)
+
+sigma_a = pcov[0][0] ** 0.5
+sigma_b = pcov[1][1] ** 0.5
+sigma_c= pcov[2][2] ** 0.5
+
+x_value = np.linspace(0, max(mean_cell_areas), 1000)
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.errorbar(mean_cell_areas, norm_mean_optimized_d, yerr=norm_std_optimized_d, fmt= 'k+')
+
+plt.plot(x_value, quadratic(x_value, *popt), c='r', linewidth=1.0,
+             label=r'$f(c) =(%.2E \pm %.2E)d^2 + (%.2E \pm %.2E)d + (%.2E \pm %.2E)$' % (
+                     popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c))
+ax.set_xlabel("Cell area")
+plt.legend(fontsize=15)
+ax.set_ylabel("Value of minimum cost function")
+ax.set_title("Normal")
+
+popt, pcov = curve_fit(quadratic, mean_cell_areas, zipf_mean_optimized_d, p0=p0)
+
+sigma_a = pcov[0][0] ** 0.5
+sigma_b = pcov[1][1] ** 0.5
+sigma_c= pcov[2][2] ** 0.5
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.errorbar(mean_cell_areas, zipf_mean_optimized_d, yerr=zipf_std_optimized_d, fmt= 'k+')
+
+plt.plot(x_value, quadratic(x_value, *popt), c='r', linewidth=1.0,
+             label=r'$f(c) =(%.2E \pm %.2E)d^2 + (%.2E \pm %.2E)d + (%.2E \pm %.2E)$' % (
+                     popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c))
+
+ax.set_xlabel("Cell area")
+plt.legend(fontsize = 15)
+ax.set_ylabel("Value of minimum cost function")
+ax.set_title("zipf")
+plt.show()
+
