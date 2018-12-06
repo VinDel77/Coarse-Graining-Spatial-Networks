@@ -14,6 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import save
 from tqdm import tqdm
+from scipy.stats import linregress
 import pickle
 
 def do_runs():
@@ -68,4 +69,35 @@ def plot_results(file_name):
     ax.set_ylabel('Flow loss')
     plt.show()
 
-plot_results('ten_flows_dict.pickle')
+def plot_results_std(file_name):
+    results_dict = pickle.load(open(file_name, 'rb'))
+    x_vals = np.array(list(results_dict.keys()))
+
+    y_data = np.array(list(results_dict.values()))
+    y_vals = np.mean(y_data, axis=1)
+    y_err = 2*np.std(y_data, axis=1)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.errorbar(x_vals, y_vals, yerr=y_err, marker='o', ls='', ecolor='k', capsize=3)
+
+    grad, coef, r_val, p_val, stderr = linregress(x_vals, y_vals)
+    x_range = np.linspace(min(x_vals), max(x_vals), 100)
+    y_range = grad * x_range + coef
+
+    ax.plot(x_range, y_range, 'r-')
+    ax.set_xlabel('Cell Area')
+    ax.set_ylabel('Flow loss')
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    y_diff = abs(y_vals - linear_func(x_vals, grad, coef))
+    ax.plot(x_vals, y_diff, 'xk')
+    ax.set_xlabel('Cell Area')
+    ax.set_ylabel('Error in fit')
+
+    plt.show()
+
+def linear_func(x, grad, coef):
+    return x * grad - coef
+plot_results_std('ten_flows_dict.pickle')
