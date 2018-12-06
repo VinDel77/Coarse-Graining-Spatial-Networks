@@ -15,7 +15,10 @@ import matplotlib.pyplot as plt
 import save
 from tqdm import tqdm
 from scipy.stats import linregress
+from matplotlib.ticker import AutoMinorLocator
+from matplotlib import rc
 import pickle
+import matplotlib
 
 def do_runs():
     test_values = list(range(2, 10))
@@ -70,6 +73,14 @@ def plot_results(file_name):
     plt.show()
 
 def plot_results_std(file_name):
+    font = {'family' : 'serif',
+            'sans-serif':['Helvetica'],
+            'serif': ['Computer Modern'],
+            'weight' : 'normal',
+            'size'   : 18}
+
+    matplotlib.rc('font', **font)
+    matplotlib.rc('text', usetex=True)
     results_dict = pickle.load(open(file_name, 'rb'))
     x_vals = np.array(list(results_dict.keys()))
 
@@ -79,6 +90,10 @@ def plot_results_std(file_name):
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
+
+    for i, x_val in enumerate(x_vals):
+        ax.plot(np.full_like(y_data[i], x_val), y_data[i], marker='o', ls='', color='grey', alpha=0.3)
+
     ax.errorbar(x_vals, y_vals, yerr=y_err, marker='o', ls='', ecolor='k', capsize=3)
 
     grad, coef, r_val, p_val, stderr = linregress(x_vals, y_vals)
@@ -86,16 +101,21 @@ def plot_results_std(file_name):
     y_range = grad * x_range + coef
 
     ax.plot(x_range, y_range, 'r-')
-    ax.set_xlabel('Cell Area')
-    ax.set_ylabel('Flow loss')
+    ax.set_xlabel(r'Cell Area')
+    ax.set_ylabel(r'Flow loss')
+    ax.xaxis.set_minor_locator(AutoMinorLocator())
+    ax.yaxis.set_minor_locator(AutoMinorLocator())
+    plt.grid(which='both', axis='both')
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
     y_diff = abs(y_vals - linear_func(x_vals, grad, coef))
     ax.plot(x_vals, y_diff, 'xk')
-    ax.set_xlabel('Cell Area')
-    ax.set_ylabel('Error in fit')
-
+    ax.set_xlabel(r'Cell Area')
+    ax.set_ylabel(r'Error in fit')
+    ax.xaxis.set_minor_locator(AutoMinorLocator())
+    ax.yaxis.set_minor_locator(AutoMinorLocator())
+    plt.grid(which='both', axis='both')
     plt.show()
 
 def linear_func(x, grad, coef):
