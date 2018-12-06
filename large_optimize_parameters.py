@@ -53,18 +53,19 @@ sigma_b = pcov[1][1] ** 0.5
 sigma_c= pcov[2][2] ** 0.5
 
 x_value = np.linspace(0, max(mean_cell_areas), 1000)
-
-fig = plt.figure()
+plt.rc('text', usetex=True)
+fig = plt.figure(1, figsize=(15.0, 9.0))
 ax = fig.add_subplot(111)
 ax.errorbar(mean_cell_areas, norm_mean_optimized_d, yerr=norm_std_optimized_d, fmt= 'k+')
 
 plt.plot(x_value, quadratic(x_value, *popt), c='r', linewidth=1.0,
              label=r'$f(c) =(%.2E \pm %.2E)d^2 + (%.2E \pm %.2E)d + (%.2E \pm %.2E)$' % (
                      popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c))
-ax.set_xlabel("Cell area")
+ax.set_xlabel(r'Cell area', fontsize = 15)
 plt.legend(fontsize=15)
-ax.set_ylabel("Value of minimum cost function")
-ax.set_title("Normal")
+ax.set_ylabel(r'Value of minimum cost function', fontsize = 15)
+ax.set_title(r'Normal', fontsize = 15)
+plt.savefig('/Users/ellereyireland1/Documents/University/Third_year/BSc_project/Report/Images/norm_min_d_parameter')
 
 popt, pcov = curve_fit(quadratic, mean_cell_areas, zipf_mean_optimized_d, p0=p0)
 
@@ -72,7 +73,7 @@ sigma_a = pcov[0][0] ** 0.5
 sigma_b = pcov[1][1] ** 0.5
 sigma_c= pcov[2][2] ** 0.5
 
-fig = plt.figure()
+fig = plt.figure(2, figsize=(15.0, 9.0))
 ax = fig.add_subplot(111)
 ax.errorbar(mean_cell_areas, zipf_mean_optimized_d, yerr=zipf_std_optimized_d, fmt= 'k+')
 
@@ -80,9 +81,9 @@ plt.plot(x_value, quadratic(x_value, *popt), c='r', linewidth=1.0,
              label=r'$f(c) =(%.2E \pm %.2E)d^2 + (%.2E \pm %.2E)d + (%.2E \pm %.2E)$' % (
                      popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c))
 
-ax.set_xlabel("Cell area")
+ax.set_xlabel(r'Cell area', fontsize = 15)
 plt.legend(fontsize = 15)
-ax.set_ylabel("Value of minimum cost function")
-ax.set_title("zipf")
+ax.set_ylabel(r'Value of minimum cost function', fontsize = 15)
+ax.set_title(r'zipf', fontsize = 15)
+plt.savefig('/Users/ellereyireland1/Documents/University/Third_year/BSc_project/Report/Images/zipf_min_d_parameter')
 plt.show()
-
