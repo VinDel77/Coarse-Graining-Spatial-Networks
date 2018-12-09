@@ -6,7 +6,7 @@ Created on Thu Dec  6 14:33:30 2018
 @author: ellereyireland1
 """
 
-import pickle as p 
+import pickle as p
 import numpy as np
 import system as sys
 import run_gravity as g
@@ -15,6 +15,7 @@ import scipy as sp
 import coarse_graining as cg
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 from tqdm import tqdm
 from scipy.optimize import curve_fit
 import save
@@ -24,7 +25,7 @@ def quadratic(x, a, b, c):
 
 p0 = [1, 1, 1]
 
-norm_cell_areas = p.load( open( "all_norm_cell_areas.pickle", "rb")) 
+norm_cell_areas = p.load( open( "all_norm_cell_areas.pickle", "rb"))
 norm_optimized_d = p.load( open( "all_norm_optimized_d.pickle", "rb"))
 zipf_cell_areas = p.load( open( "all_zipf_cell_areas.pickle", "rb"))
 zipf_optimized_d = p.load( open( "all_zipf_optimized_d.pickle", "rb"))
@@ -42,9 +43,6 @@ for i in range(20):
     coloumn = zipf_optimized_d[ :,i]
     zipf_mean_optimized_d.append(np.mean(coloumn))
     zipf_std_optimized_d.append(np.std(coloumn))
-    
-
-
 
 popt, pcov = curve_fit(quadratic, mean_cell_areas, norm_mean_optimized_d, p0=p0)
 
@@ -54,18 +52,21 @@ sigma_c= pcov[2][2] ** 0.5
 
 x_value = np.linspace(0, max(mean_cell_areas), 1000)
 plt.rc('text', usetex=True)
+matplotlib.rcParams.update({'font.size':18})
 fig = plt.figure(1, figsize=(15.0, 9.0))
 ax = fig.add_subplot(111)
 ax.errorbar(mean_cell_areas, norm_mean_optimized_d, yerr=norm_std_optimized_d, fmt= 'k+')
 
-plt.plot(x_value, quadratic(x_value, *popt), c='r', linewidth=1.0,
+legend_size = 15
+axes_label_size = 20
+
+plt.plot(x_value, quadratic(x_value, *popt), c='k', linewidth=1.0,
              label=r'$f(c) =(%.2E \pm %.2E)d^2 + (%.2E \pm %.2E)d + (%.2E \pm %.2E)$' % (
                      popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c))
-ax.set_xlabel(r'Grained cell area (length$^2$)', fontsize = 15)
-plt.legend(fontsize=15)
-ax.set_ylabel(r'Optimum parameter $d$ (length)', fontsize = 15)
-ax.set_title(r'Normal distribution of optimum $d$ against the grained cell area', fontsize = 15)
-plt.savefig('/Users/ellereyireland1/Documents/University/Third_year/BSc_project/Report/Images/norm_min_d_parameter')
+ax.set_xlabel(r'Grained cell area (length$^2$)', fontsize = axes_label_size)
+plt.legend(fontsize=legend_size)
+ax.set_ylabel(r'Optimum parameter $\gamma$ (length)', fontsize = axes_label_size)
+ax.set_title(r'Optimum $\gamma$ against the grained cell area for normally distributed sizes', fontsize = axes_label_size)
 
 popt, pcov = curve_fit(quadratic, mean_cell_areas, zipf_mean_optimized_d, p0=p0)
 
@@ -75,15 +76,14 @@ sigma_c= pcov[2][2] ** 0.5
 
 fig = plt.figure(2, figsize=(15.0, 9.0))
 ax = fig.add_subplot(111)
-ax.errorbar(mean_cell_areas, zipf_mean_optimized_d, yerr=zipf_std_optimized_d, fmt= 'k+')
+ax.errorbar(mean_cell_areas, zipf_mean_optimized_d, yerr=zipf_std_optimized_d, fmt= 'k+', capsize=3)
 
-plt.plot(x_value, quadratic(x_value, *popt), c='r', linewidth=1.0,
+plt.plot(x_value, quadratic(x_value, *popt), c='k', linewidth=1.0,
              label=r'$f(c) =(%.2E \pm %.2E)d^2 + (%.2E \pm %.2E)d + (%.2E \pm %.2E)$' % (
                      popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c))
 
-ax.set_xlabel(r'Grained cell area (length$^2$)', fontsize = 15)
-plt.legend(fontsize = 15)
-ax.set_ylabel(r'Optimum parameter $d$ (length)', fontsize = 15)
-ax.set_title(r'Zipf distribution of optimum $d$ against the grained cell area', fontsize = 15)
-plt.savefig('/Users/ellereyireland1/Documents/University/Third_year/BSc_project/Report/Images/zipf_min_d_parameter')
+ax.set_xlabel(r'Grained cell area (length$^2$)', fontsize = axes_label_size)
+plt.legend(fontsize = legend_size)
+ax.set_ylabel(r'Optimum $\gamma$ (length)', fontsize = axes_label_size)
+ax.set_title(r'Optimum $\gamma$ against the grained cell area for zipf distributed sizes', fontsize = axes_label_size)
 plt.show()
