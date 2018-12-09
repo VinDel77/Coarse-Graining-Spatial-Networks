@@ -7,6 +7,7 @@ Created on Sun Oct 28 16:31:57 2018
 """
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 
 class Gravity:
@@ -25,7 +26,7 @@ class Gravity:
                                   node_number)
         self.B = np.random.normal(np.mean(self.metric), np.std(self.metric),
                                   node_number)
-        
+
 
     def set_flows(self):
         self.system.flow_matrix = self.calculate_flow_matrix()
@@ -59,7 +60,7 @@ class Gravity:
                     matrix[j, i] = metric_ij
             return matrix
 
-        
+
 
     def tuning_function(self, iterations=1000, tolerance=0.0000001):
         a_values = []
@@ -105,24 +106,29 @@ class Gravity:
 
 
     def plot_results(self, a_values, b_values, products):
+        matplotlib.rcParams.update({'font.size':18})
         x_axis = range(len(a_values))
         fig = plt.figure()
         ax = fig.add_subplot(111)
 
-        ax.plot(x_axis, a_values[:, 0], 'ro', label='A values')
-        ax.plot(x_axis, b_values[:, 0], 'bo', label='B values')
+        ax.plot(x_axis, a_values[:, 0], '--', color='grey', lw=2.5, label='A values')
+        ax.plot(x_axis, b_values[:, 0], ':', color='grey', lw=2.5, label='B values')
+        ax.set_ylabel("Constant Value")
+        ax.set_xlabel('Iteration')
 
-        plt.legend()
+        plt.legend(loc=(0.7, 0.5))
 
         ax2 = ax.twinx()
-        ax2.plot(x_axis, products[:, 0], 'ko', label='Ratio of A*B')
+        ax2.plot(x_axis, products[:, 0], 'kx-', lw=2.5, label='Ratio of A*B')
+        ax2.set_ylabel("Product Value")
+        ax2.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 
-        plt.legend()
+        plt.legend(loc=(0.7, 0.40))
 
         plt.show()
 
     def converging(self, product_ab_list, tolerance):
-        if len(product_ab_list) < 5:
+        if len(product_ab_list) < 10:
             return False
 
         value_range = np.ptp(product_ab_list[-5:, :], axis=0)

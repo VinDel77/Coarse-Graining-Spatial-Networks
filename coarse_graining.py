@@ -45,7 +45,7 @@ class Coarse_graining:
             nodes = self.system.nodes[indices]
             mass = self.system.inflow[indices] + self.system.outflow[indices]
             new_nodes[i] = _combined_position(nodes, mass)
-        return new_nodes
+        return new_nodes.tolist()
 
     def get_new_flow(self, grouped_indices):
         sys_length = len(grouped_indices)

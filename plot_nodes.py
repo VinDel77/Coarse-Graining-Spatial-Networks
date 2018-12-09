@@ -1,12 +1,16 @@
 import matplotlib.pyplot as plt
+from matplotlib import rc
 
-def plot_nodes(nodes, fig=None, fmt='bo'):
+def plot_nodes(nodes, fig=None, colour='b', size=15.0):
     if fig is None:
         fig = plt.figure(1)
 
     ax = fig.add_subplot(111)
 
-    ax.plot(nodes[:, 0], nodes[:, 1], fmt)
+    ax.scatter(nodes[:, 0], nodes[:, 1], marker='o', color=colour, s=size)
+    ax.set_xlim((0, 1))
+    ax.set_ylim((0, 1))
+#    ax.grid(True)
     return fig
 
 def plot_gridlines(boundaries, fig):
@@ -16,7 +20,7 @@ def plot_gridlines(boundaries, fig):
         ax.axhline(b, color='gray', alpha=0.5)
     return fig
 
-def plot_nodes_weighted(nodes, masses, fig=None, colour='b'):
+def plot_nodes_weighted(nodes, masses, fig=None, colour='k'):
     if fig is None:
         fig = plt.figure(1)
 
@@ -31,4 +35,21 @@ def plot_nodes_weighted(nodes, masses, fig=None, colour='b'):
     marker_size += 1
     ax.scatter(nodes[:, 0], nodes[:, 1], color=colour, s=marker_size)
 
+#    ax.grid(True)
+    ax.set_xlim((0, 1))
+    ax.set_ylim((0, 1))
+
     return fig
+
+def plot_cost_distance(costs, distances):
+    rc('text', usetex=True)
+    rc('font', **{'family':'sans-serif', 'size':18})
+    plt.rc('font', family='sans-serif')
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(distances, costs, 'k-')
+
+    ax.set_xlabel(r'Value of $\gamma$')
+    ax.set_ylabel(r'Cost')
+    plt.show()

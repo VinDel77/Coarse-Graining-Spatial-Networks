@@ -50,7 +50,7 @@ for d in tqdm(distances):
     s.cost_function(original_flows, grained_flows)
     cost_values.append(s.cost)
 
-save.save_object(cost_values, "Cost value array")
+save.save_object([distances, cost_values], "Cost value array")
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.plot(distances, cost_values, 'ro')
