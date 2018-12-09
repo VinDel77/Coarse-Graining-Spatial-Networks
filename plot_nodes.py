@@ -20,7 +20,7 @@ def plot_gridlines(boundaries, fig):
         ax.axhline(b, color='gray', alpha=0.5)
     return fig
 
-def plot_nodes_weighted(nodes, masses, fig=None, colour='k'):
+def plot_nodes_weighted(nodes, masses, fig=None, colour='k', size_multiplier=50):
     if fig is None:
         fig = plt.figure(1)
 
@@ -31,11 +31,11 @@ def plot_nodes_weighted(nodes, masses, fig=None, colour='k'):
     print(min_masses)
 
     marker_size = (masses - min_masses) / (max_masses -  min_masses)
-    marker_size *= 50
+    marker_size *= size_multiplier
     marker_size += 1
     ax.scatter(nodes[:, 0], nodes[:, 1], color=colour, s=marker_size)
 
-#    ax.grid(True)
+    ax.grid(True)
     ax.set_xlim((0, 1))
     ax.set_ylim((0, 1))
 
@@ -52,4 +52,15 @@ def plot_cost_distance(costs, distances):
 
     ax.set_xlabel(r'Value of $\gamma$')
     ax.set_ylabel(r'Cost')
+    plt.show()
+
+def plot_norm_zipf(norm_system, zipf_system):
+    fig = plt.figure(1)
+    plot_nodes_weighted(norm_system.nodes, norm_system.inflow +
+                        norm_system.outflow, fig=fig, colour='k')
+
+    fig = plt.figure(2)
+    plot_nodes_weighted(zipf_system.nodes, zipf_system.inflow +
+                        zipf_system.outflow, fig=fig, colour='k', size_multiplier=75)
+
     plt.show()
