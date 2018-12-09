@@ -73,14 +73,15 @@ def plot_results(file_name):
     plt.show()
 
 def plot_results_std(file_name):
-    font = {'family' : 'serif',
+    font = {'family' : 'sans-serif',
             'sans-serif':['Helvetica'],
             'serif': ['Computer Modern'],
             'weight' : 'normal',
-            'size'   : 18}
+            'size'   : 15}
 
     matplotlib.rc('font', **font)
     matplotlib.rc('text', usetex=True)
+    matplotlib.rcParams['font.family'] = 'sans-serif'
     results_dict = pickle.load(open(file_name, 'rb'))
     x_vals = np.array(list(results_dict.keys()))
 
@@ -101,23 +102,32 @@ def plot_results_std(file_name):
     y_range = grad * x_range + coef
 
     ax.plot(x_range, y_range, 'r-')
-    ax.set_xlabel(r'Cell Area')
-    ax.set_ylabel(r'Flow loss')
+    ax.set_xlabel(r'Cell Area ($S$)', fontsize=18)
+    ax.set_ylabel(r'Flow loss ($L$)', fontsize=18)
     ax.xaxis.set_minor_locator(AutoMinorLocator())
     ax.yaxis.set_minor_locator(AutoMinorLocator())
     plt.grid(which='both', axis='both')
+    rounded_grad = round(grad, 3)
+    rounded_coef = -1 * round(coef, 3)
+    label = r'$L(S) = {} * S - {}$'.format(rounded_grad, rounded_coef)
+    ax.text(0.15, -0.5, label)
+    ax.text(0.15, -0.7, r'$R^2 = {}$'.format(round(r_val ** 2, 5)))
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
     y_diff = abs(y_vals - linear_func(x_vals, grad, coef))
     ax.plot(x_vals, y_diff, 'xk')
-    ax.set_xlabel(r'Cell Area')
-    ax.set_ylabel(r'Error in fit')
+    ax.set_xlabel(r'Cell Area ($S$)', fontsize=18)
+    ax.set_ylabel(r'Error in fit', fontsize=18)
     ax.xaxis.set_minor_locator(AutoMinorLocator())
     ax.yaxis.set_minor_locator(AutoMinorLocator())
     plt.grid(which='both', axis='both')
+
+    print("Linear function grad: {}".format(grad))
+    print("Linear function coef: {}".format(coef))
     plt.show()
 
 def linear_func(x, grad, coef):
-    return x * grad - coef
+    return x * grad + coef
+
 plot_results_std('ten_flows_dict.pickle')
