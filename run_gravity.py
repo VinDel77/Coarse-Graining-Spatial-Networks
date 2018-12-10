@@ -111,14 +111,13 @@ class Gravity:
 
         ax.plot(x_axis, a_values[:, 0], 'ro', label='A values')
         ax.plot(x_axis, b_values[:, 0], 'bo', label='B values')
-
-        plt.legend()
-
+        plt.legend(fontsize = 15 )
+        
         ax2 = ax.twinx()
-        ax2.plot(x_axis, products[:, 0], 'ko', label='Ratio of A*B')
-
-        plt.legend()
-
+        ax2.plot(x_axis, products[:, 0], 'k-', label=r'A $\times$ B')
+        
+        plt.legend(fontsize = 15)
+        plt.savefig('/Users/ellereyireland1/Documents/University/Third_year/BSc_project/Report/Images/convergence')
         plt.show()
 
     def converging(self, product_ab_list, tolerance):

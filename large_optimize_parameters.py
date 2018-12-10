@@ -18,6 +18,8 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 from scipy.optimize import curve_fit
 import save
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import mark_inset
 
 def quadratic(x, a, b, c):
     return a*x**2 + b*x + c
@@ -65,6 +67,25 @@ ax.set_xlabel(r'Grained cell area (length$^2$)', fontsize = 15)
 plt.legend(fontsize=15)
 ax.set_ylabel(r'Optimum parameter $d$ (length)', fontsize = 15)
 ax.set_title(r'Normal distribution of optimum $d$ against the grained cell area', fontsize = 15)
+
+
+axins = zoomed_inset_axes(ax, 3, loc = 6)
+axins.tick_params(
+    axis='both',          # changes apply to the x-axis
+    which='both',      # both major and minor ticks are affected
+    bottom=False,      # ticks along the bottom edge are off
+    top=False,   
+    right=False,     # ticks along the top edge are off
+    labelbottom=False,
+    labelleft=False)
+axins.errorbar(mean_cell_areas, norm_mean_optimized_d, yerr=norm_std_optimized_d, fmt= 'k+')
+
+axins.plot(x_value, quadratic(x_value, *popt), c='r', linewidth=1.0)
+axins.set_xlim(0, 0.05) # apply the x-limits
+axins.set_ylim(0.45, 0.55) 
+
+mark_inset(ax, axins, loc1=3, loc2=4, fc="none", ec="0.5")
+
 plt.savefig('/Users/ellereyireland1/Documents/University/Third_year/BSc_project/Report/Images/norm_min_d_parameter')
 
 popt, pcov = curve_fit(quadratic, mean_cell_areas, zipf_mean_optimized_d, p0=p0)
@@ -85,5 +106,23 @@ ax.set_xlabel(r'Grained cell area (length$^2$)', fontsize = 15)
 plt.legend(fontsize = 15)
 ax.set_ylabel(r'Optimum parameter $d$ (length)', fontsize = 15)
 ax.set_title(r'Zipf distribution of optimum $d$ against the grained cell area', fontsize = 15)
+
+axins = zoomed_inset_axes(ax, 3, loc=6)
+axins.tick_params(
+    axis='both',          # changes apply to the x-axis
+    which='both',      # both major and minor ticks are affected
+    bottom=False,      # ticks along the bottom edge are off
+    top=False,   
+    right=False,     # ticks along the top edge are off
+    labelbottom=False,
+    labelleft=False)
+axins.errorbar(mean_cell_areas, zipf_mean_optimized_d, yerr=zipf_std_optimized_d, fmt= 'k+')
+
+axins.plot(x_value, quadratic(x_value, *popt), c='r', linewidth=1.0)
+axins.set_xlim(0, 0.05) # apply the x-limits
+axins.set_ylim(0.45, 0.6) 
+
+mark_inset(ax, axins, loc1=3, loc2=4, fc="none", ec="0.5")
+
 plt.savefig('/Users/ellereyireland1/Documents/University/Third_year/BSc_project/Report/Images/zipf_min_d_parameter')
 plt.show()
