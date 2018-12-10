@@ -57,16 +57,16 @@ fig = plt.figure(1, figsize=(15.0, 9.0))
 ax = fig.add_subplot(111)
 ax.errorbar(mean_cell_areas, norm_mean_optimized_d, yerr=norm_std_optimized_d, fmt= 'k+')
 
-legend_size = 15
-axes_label_size = 20
+legend_size = 18
+axes_label_size = 26
 
 plt.plot(x_value, quadratic(x_value, *popt), c='k', linewidth=1.0)
-label=r'$\gamma(S) =(%.2E \pm %.2E)S^2 + (%.2E \pm %.2E)S + (%.2E \pm%.2E)$' % ( popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c)
+label=r'$\overline{d}(S) =(%.2E \pm %.2E)S^2 + (%.2E \pm %.2E)S + (%.2E \pm%.2E)$' % ( popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c)
 ax.text(0.0, 2.35, label)
 ax.set_xlabel(r'Grained cell area $S$ (length$^2$)', fontsize = axes_label_size)
 plt.legend(fontsize=legend_size)
-ax.set_ylabel(r'Optimum parameter $\gamma$ (length)', fontsize = axes_label_size)
-ax.set_title(r'Optimum $\gamma$ against the grained cell area for normally distributed sizes', fontsize = axes_label_size)
+ax.set_ylabel(r'Optimum parameter $\overline{d}$ (length)', fontsize = axes_label_size)
+ax.set_title(r'Optimum $\overline{d}$ against the grained cell area for normally distributed sizes', fontsize = axes_label_size)
 ax.grid(True)
 
 popt, pcov = curve_fit(quadratic, mean_cell_areas, zipf_mean_optimized_d, p0=p0)
@@ -81,12 +81,12 @@ ax.errorbar(mean_cell_areas, zipf_mean_optimized_d, yerr=zipf_std_optimized_d, f
 
 plt.plot(x_value, quadratic(x_value, *popt), c='k', linewidth=1.0)
 
-label=r'$\gamma(S) =(%.2E \pm %.2E)S^2 + (%.2E \pm %.2E)S + (%.2E \pm%.2E)$' % ( popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c)
+label=r'$\overline{d}(S) =(%.2E \pm %.2E)S^2 + (%.2E \pm %.2E)S + (%.2E \pm%.2E)$' % ( popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c)
 ax.text(0.0, 2.35, label)
 
 ax.set_xlabel(r'Grained cell area $S$ (length$^2$)', fontsize = axes_label_size)
 plt.legend(fontsize = legend_size)
-ax.set_ylabel(r'Optimum $\gamma$ (length)', fontsize = axes_label_size)
-ax.set_title(r'Optimum $\gamma$ against the grained cell area for zipf distributed sizes', fontsize = axes_label_size)
+ax.set_ylabel(r'Optimum $\overline{d}$ (length)', fontsize = axes_label_size)
+ax.set_title(r'Optimum $\overline{d}$ against the grained cell area for zipf distributed sizes', fontsize = axes_label_size)
 ax.grid(True)
 plt.show()
