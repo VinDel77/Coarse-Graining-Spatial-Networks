@@ -50,8 +50,9 @@ def plot_cost_distance(costs, distances):
     ax = fig.add_subplot(111)
     ax.plot(distances, costs, 'k-')
 
-    ax.set_xlabel(r'Value of $\gamma$')
-    ax.set_ylabel(r'Cost')
+    ax.set_xlabel(r'Value of $\overline{d}$', fontsize = 24)
+    ax.set_ylabel(r'Cost', fontsize=24)
+    ax.grid(True)
     plt.show()
 
 def plot_norm_zipf(norm_system, zipf_system):

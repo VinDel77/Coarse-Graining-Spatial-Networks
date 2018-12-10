@@ -119,7 +119,7 @@ class Gravity:
         plt.legend(loc=(0.7, 0.5))
 
         ax2 = ax.twinx()
-        ax2.plot(x_axis, products[:, 0], 'kx-', lw=2.5, label='Ratio of A*B')
+        ax2.plot(x_axis, products[:, 0], 'kx-', lw=2.5, label='A*B')
         ax2.set_ylabel("Product Value")
         ax2.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 
