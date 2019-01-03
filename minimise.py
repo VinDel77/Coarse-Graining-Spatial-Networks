@@ -31,8 +31,8 @@ def func(d, s, grained_system, original_flows):
     return s.cost
 
 def find_minimum_sp(grained_system, s, original_flows):
-    intial_guess = 1.0
-    opt = minimize(func, intial_guess, (s, grained_system, original_flows))
+    intial_guess = np.mean(grained_system.distance_matrix)
+    opt = minimize(func, intial_guess, (s, grained_system, original_flows), bounds=[(0.000000001, np.inf)])
     return opt.x[0]
 
 def run():
