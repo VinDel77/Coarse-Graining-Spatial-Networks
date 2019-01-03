@@ -59,7 +59,7 @@ class System:
         return np.random.rand(node_number, 2)
 
     def calculate_distance_matrix(self):
-        return calculate_2d_dist_matrix_sp(self.nodes)
+        return calculate_2d_dist_matrix(self.nodes)
 
     def generate_inflow_outflow(self, node_number):
         total_mass_list = np.random.zipf(1.005, size=node_number)
@@ -92,26 +92,6 @@ class System:
 
 
 def calculate_2d_dist_matrix(positions):
-    """
-    Calculate the distance matrix in 1d.
-
-    For 2D  think about using:
-        scipy.spatial.distance_matrix
-    """
-    len_indices = len(positions)
-    distance_matrix = np.zeros((len_indices, len_indices))
-
-    index_range = range(len_indices)
-
-    for i in index_range:
-        for j in index_range[i:]:
-            dist = np.linalg.norm(positions[i]  -  positions[j])
-            distance_matrix[i, j] = dist
-            distance_matrix[j, i] = dist
-
-    return distance_matrix
-
-def calculate_2d_dist_matrix_sp(positions):
     """
     Calculate the distance matrix in 1d.
 
