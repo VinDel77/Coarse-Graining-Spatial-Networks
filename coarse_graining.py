@@ -39,13 +39,14 @@ class Coarse_graining:
         return np.array(indices)
 
     def get_new_nodes(self, grouped_indices):
-        new_nodes = np.empty(len(grouped_indices), dtype=np.ndarray)
+        new_nodes = []
 
         for i, indices in enumerate(grouped_indices):
             nodes = self.system.nodes[indices]
             mass = self.system.inflow[indices] + self.system.outflow[indices]
-            new_nodes[i] = _combined_position(nodes, mass)
-        return new_nodes
+            pos = _combined_position(nodes, mass)
+            new_nodes.append(pos)
+        return np.array(new_nodes)
 
     def get_new_flow(self, grouped_indices):
         sys_length = len(grouped_indices)

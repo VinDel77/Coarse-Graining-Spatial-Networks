@@ -7,6 +7,7 @@ Created on Sun Oct 28 16:31:57 2018
 """
 
 import numpy as np
+import scipy.spatial as spa
 
 
 class System:
@@ -58,7 +59,7 @@ class System:
         return np.random.rand(node_number, 2)
 
     def calculate_distance_matrix(self):
-        return calculate_2d_dist_matrix(self.nodes)
+        return calculate_2d_dist_matrix_sp(self.nodes)
 
     def generate_inflow_outflow(self, node_number):
         total_mass_list = np.random.zipf(1.005, size=node_number)
@@ -109,3 +110,13 @@ def calculate_2d_dist_matrix(positions):
             distance_matrix[j, i] = dist
 
     return distance_matrix
+
+def calculate_2d_dist_matrix_sp(positions):
+    """
+    Calculate the distance matrix in 1d.
+
+    For 2D  think about using:
+        scipy.spatial.distance_matrix
+    """
+    condensed = spa.distance.pdist(positions)
+    return spa.distance.squareform(condensed)
