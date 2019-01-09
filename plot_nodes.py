@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib import rc
+import system as s
 
 def plot_nodes(nodes, fig=None, colour='b', size=15.0):
     if fig is None:
@@ -65,3 +66,14 @@ def plot_norm_zipf(norm_system, zipf_system):
                         zipf_system.outflow, fig=fig, colour='k', size_multiplier=75)
 
     plt.show()
+
+if __name__=="__main__":
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif', size=18)
+    norm = s.System()
+    zipf = s.System()
+
+    norm.random_system(500)
+    zipf.random_system(500, normal=False)
+
+    plot_norm_zipf(norm, zipf)
