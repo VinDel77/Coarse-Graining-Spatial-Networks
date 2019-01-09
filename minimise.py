@@ -41,15 +41,15 @@ def run():
     min_dist = find_minimum_mc(grained_system, s, original_flows )
     min_dist_sp = find_minimum_sp(grained_system, s, original_flows)
 
-    fig = plt.figure(1, figsize=(15.0, 9.0))
+    fig = plt.figure(1, figsize=(10, 8))
     plt.rc('text', usetex=True)
+    plt.rc('font', family='serif', size=18)
     ax = fig.add_subplot(111)
-    ax.plot(distances, cost_values, 'r-')
-    ax.axvline(min_dist, color='g')
-    ax.axvline(min_dist_sp, color='b', ls='--')
-    ax.set_xlabel("Distance coefficient (length)", fontsize = 15)
-    ax.set_ylabel("Value of cost function (unitless)", fontsize = 15)
-    ax.set_title(r'Cost function value against the parameter d', fontsize = 15)
+    ax.plot(distances, cost_values, 'k-')
+    ax.axvline(min_dist_sp, color='k', ls='--')
+    ax.set_xlabel(r"Distance coefficient ($d_0$)", fontsize = 18)
+    ax.set_ylabel(r"Error in flow matrix ($E$)", fontsize = 18)
+    ax.grid(True)
     plt.show()
 
 def time_start():
@@ -80,4 +80,4 @@ def time_sp():
     return 0
 
 if __name__=="__main__":
-    cProfile.run('time_sp()', 'new_dist_sp_min', sort='cumulative')
+    run()
