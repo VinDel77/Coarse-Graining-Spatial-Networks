@@ -62,7 +62,7 @@ class Gravity:
 
 
 
-    def tuning_function(self, iterations=1000, tolerance=0.0000001):
+    def tuning_function(self, iterations=1000, tolerance=0.0000001, plot=False):
         a_values = []
         b_values = []
         products = []
@@ -85,7 +85,8 @@ class Gravity:
         self.A = a_values[-1]
         self.B = b_values[-1]
 
-#        self.plot_results(a_values, b_values, products)
+        if plot:
+            self.plot_results(a_values, b_values, products)
         return a_values, b_values, products
 
 
@@ -106,25 +107,30 @@ class Gravity:
 
 
     def plot_results(self, a_values, b_values, products):
+        plt.rc('text', usetex=True)
+        plt.rc('font', family='serif')
         matplotlib.rcParams.update({'font.size':18})
         x_axis = range(len(a_values))
-        fig = plt.figure()
+        fig = plt.figure(figsize=(12, 8))
         ax = fig.add_subplot(111)
 
-        ax.plot(x_axis, a_values[:, 0], '--', color='grey', lw=2.5, label='A values')
-        ax.plot(x_axis, b_values[:, 0], ':', color='grey', lw=2.5, label='B values')
-        ax.set_ylabel("Constant Value")
-        ax.set_xlabel('Iteration')
+        lna = ax.plot(x_axis, a_values[:, 0], '--', color='grey', lw=2.5, label='A')
+        lnb = ax.plot(x_axis, b_values[:, 0], ':', color='grey', lw=2.5, label='B')
+        ax.set_ylabel(r"Constant Value", fontsize=18)
+        ax.set_xlabel(r'Iteration', fontsize=18)
+        ax.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 
-        plt.legend(loc=(0.7, 0.5))
 
         ax2 = ax.twinx()
-        ax2.plot(x_axis, products[:, 0], 'kx-', lw=2.5, label='A*B')
-        ax2.set_ylabel("Product Value")
+        lnab = ax2.plot(x_axis, products[:, 0], 'kx-', lw=2.5, label='AB')
+        ax2.set_ylabel(r"Product Value", fontsize=18)
         ax2.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 
-        plt.legend(loc=(0.7, 0.40))
+        lns = lna + lnb + lnab
+        labels = [l.get_label() for l in lns]
+        ax.legend(lns, labels, loc=(0.85, 0.40))
 
+        ax.grid()
         plt.show()
 
     def converging(self, product_ab_list, tolerance):

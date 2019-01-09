@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib import rc
 import system as s
+import run_gravity as g
 
 def plot_nodes(nodes, fig=None, colour='b', size=15.0):
     if fig is None:
@@ -56,7 +57,15 @@ def plot_cost_distance(costs, distances):
     ax.grid(True)
     plt.show()
 
-def plot_norm_zipf(norm_system, zipf_system):
+def plot_norm_zipf():
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif', size=18)
+    norm_system = s.System()
+    zipf_system = s.System()
+
+    norm_system.random_system(500)
+    zipf_system.random_system(500, normal=False)
+
     fig = plt.figure(1)
     plot_nodes_weighted(norm_system.nodes, norm_system.inflow +
                         norm_system.outflow, fig=fig, colour='k')
@@ -67,13 +76,15 @@ def plot_norm_zipf(norm_system, zipf_system):
 
     plt.show()
 
+def plot_tuning():
+    system = s.System()
+    system.random_system(1000, normal=False)
+
+    gravity = g.Gravity()
+    gravity.set_system(system)
+
+    gravity.tuning_function(plot=True)
+
+
 if __name__=="__main__":
-    plt.rc('text', usetex=True)
-    plt.rc('font', family='serif', size=18)
-    norm = s.System()
-    zipf = s.System()
-
-    norm.random_system(500)
-    zipf.random_system(500, normal=False)
-
-    plot_norm_zipf(norm, zipf)
+    plot_tuning()
