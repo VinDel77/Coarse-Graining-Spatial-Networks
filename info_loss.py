@@ -73,15 +73,11 @@ def plot_results(file_name):
     plt.show()
 
 def plot_results_std(file_name):
-    font = {'family' : 'sans-serif',
-            'sans-serif':['Helvetica'],
-            'serif': ['Computer Modern'],
-            'weight' : 'normal',
-            'size'   : 15}
+    font = {'family' : 'serif',
+            'size'   : 18}
 
-    matplotlib.rc('font', **font)
     matplotlib.rc('text', usetex=True)
-    matplotlib.rcParams['font.family'] = 'sans-serif'
+    matplotlib.rc('font', **font)
     results_dict = pickle.load(open(file_name, 'rb'))
     x_vals = np.array(list(results_dict.keys()))
 
@@ -89,19 +85,16 @@ def plot_results_std(file_name):
     y_vals = np.mean(y_data, axis=1)
     y_err = 2*np.std(y_data, axis=1)
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
 
-    for i, x_val in enumerate(x_vals):
-        ax.plot(np.full_like(y_data[i], x_val), y_data[i], marker='o', ls='', color='grey', alpha=0.3)
-
-    ax.errorbar(x_vals, y_vals, yerr=y_err, marker='o', ls='', ecolor='k', capsize=3)
+    ax.errorbar(x_vals, y_vals, yerr=y_err, marker='o', ls='', ecolor='k', color='k', capsize=3)
 
     grad, coef, r_val, p_val, stderr = linregress(x_vals, y_vals)
     x_range = np.linspace(min(x_vals), max(x_vals), 100)
     y_range = grad * x_range + coef
 
-    ax.plot(x_range, y_range, 'r-')
+    ax.plot(x_range, y_range, color='gray', ls='-')
     ax.set_xlabel(r'Cell Area ($S$)', fontsize=18)
     ax.set_ylabel(r'Flow loss ($L$)', fontsize=18)
     ax.xaxis.set_minor_locator(AutoMinorLocator())
@@ -121,7 +114,7 @@ def plot_results_std(file_name):
     ax.set_ylabel(r'Error in fit', fontsize=18)
     ax.xaxis.set_minor_locator(AutoMinorLocator())
     ax.yaxis.set_minor_locator(AutoMinorLocator())
-    plt.grid(which='both', axis='both')
+    plt.grid(which='major', axis='both')
 
     print("Linear function grad: {}".format(grad))
     print("Linear function coef: {}".format(coef))
