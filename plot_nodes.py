@@ -102,7 +102,7 @@ def plot_coarse_graining():
     new_system = coarse_grainer.generate_new_system()
 
     plt.rc('text', usetex=True)
-    plt.rc('font', family='serif', size=18)
+    plt.rc('font', family='serif', size=22)
     fig = plt.figure(1, figsize=(10, 10))
     plot_nodes_weighted(system.nodes, system.inflow + system.outflow, fig=fig,
                         colour='k', grid=False)
