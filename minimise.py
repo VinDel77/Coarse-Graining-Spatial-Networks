@@ -47,8 +47,8 @@ def run():
     ax = fig.add_subplot(111)
     ax.plot(distances, cost_values, 'k-')
     ax.axvline(min_dist_sp, color='k', ls='--')
-    ax.set_xlabel(r"Distance coefficient ($d_0$)", fontsize = 18)
-    ax.set_ylabel(r"Error in flow matrix ($E$)", fontsize = 18)
+    ax.set_xlabel(r"Distance coefficient ($d_0$) (length)", fontsize = 18)
+    ax.set_ylabel(r"Error in flow matrix ($E$) (flow units)", fontsize = 18)
     ax.grid(True)
     plt.show()
 
