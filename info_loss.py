@@ -106,8 +106,8 @@ def plot_results_std(file_name):
     y_range = grad * x_range + coef
 
     ax.plot(x_range, y_range, color='gray', ls='-')
-    ax.set_xlabel(r'Cell Area ($S$)', fontsize=18)
-    ax.set_ylabel(r'Flow loss ($L$)', fontsize=18)
+    ax.set_xlabel(r'Cell Area ($S$) (length$^2$)', fontsize=18)
+    ax.set_ylabel(r'Flow loss ($L$) (units of flow)', fontsize=18)
     ax.xaxis.set_minor_locator(AutoMinorLocator())
     ax.yaxis.set_minor_locator(AutoMinorLocator())
     plt.grid(which='both', axis='both')
