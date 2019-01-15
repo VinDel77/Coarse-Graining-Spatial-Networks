@@ -13,8 +13,9 @@ import coarse_graining as cg
 import numpy as np
 import matplotlib.pyplot as plt
 import save
+import scipy as sp
+from scipy.optimize import curve_fit
 from tqdm import tqdm
-from scipy.stats import linregress
 from matplotlib.ticker import AutoMinorLocator
 from matplotlib import rc
 import pickle
@@ -88,9 +89,19 @@ def plot_results_std(file_name):
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
 
-    ax.errorbar(x_vals, y_vals, yerr=y_err, marker='o', ls='', ecolor='k', color='k', capsize=3)
+    p = [1, 1]
 
-    grad, coef, r_val, p_val, stderr = linregress(x_vals, y_vals)
+    ax.errorbar(x_vals[1:], y_vals[1:], yerr=y_err[1:], marker='o', ls='', ecolor='k', color='k', capsize=3)
+
+    popt, pcov = curve_fit(linear_func, x_vals, y_vals, p0=p)
+    grad, coef = popt
+    e_grad = pcov[0][0] ** 0.5
+    e_coef = pcov[1][1] ** 0.5
+
+    residuals = y_vals - linear_func(x_vals, *popt)
+    ss_res = np.sum(residuals**2)
+    ss_tot = np.sum((y_vals - np.mean(y_vals))**2)
+    r_val = 1.0 - (ss_res/ ss_tot)
     x_range = np.linspace(min(x_vals), max(x_vals), 100)
     y_range = grad * x_range + coef
 
@@ -100,11 +111,14 @@ def plot_results_std(file_name):
     ax.xaxis.set_minor_locator(AutoMinorLocator())
     ax.yaxis.set_minor_locator(AutoMinorLocator())
     plt.grid(which='both', axis='both')
-    rounded_grad = round(grad, 3)
-    rounded_coef = -1 * round(coef, 3)
-    label = r'$L(S) = {} * S - {}$'.format(rounded_grad, rounded_coef)
-    ax.text(0.15, -0.5, label)
-    ax.text(0.15, -0.7, r'$R^2 = {}$'.format(round(r_val ** 2, 5)))
+    rounded_grad = round(grad, 2)
+    rounded_coef = -1 * round(coef, 2)
+    e_grad = round(e_grad, 1)
+    e_coef = round(e_coef, 2)
+    label = r'$L(S) = {} \pm {} * S - {} \pm {}$'.format(rounded_grad, e_grad,
+                                                         rounded_coef, e_coef)
+    ax.text(0.12, -0.5, label)
+    ax.text(0.12, -0.7, r'$R^2 = {}$'.format(round(r_val ** 2, 5)))
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -120,7 +134,7 @@ def plot_results_std(file_name):
     print("Linear function coef: {}".format(coef))
     plt.show()
 
-def linear_func(x, grad, coef):
-    return x * grad + coef
+def linear_func(x, a , b):
+    return x * a + b
 
 plot_results_std('ten_flows_dict.pickle')
