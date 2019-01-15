@@ -65,7 +65,7 @@ ax.errorbar(mean_cell_areas, norm_mean_optimized_d, yerr=norm_std_optimized_d, f
 
 plt.plot(x_value, quadratic(x_value, *popt), c='k', linewidth=1.0)
 ax.set_xlabel(r'Grained cell area $S$ (length$^2$)', fontsize = 20)
-label = r'$f(c) =(%.2E \pm %.0E)d^2 + (%.1E \pm %.0E)d + (%.2E \pm %.0E)$' % ( popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c)
+label = r'$d_0(S) =(%.2E \pm %.0E)S^2 + (%.1E \pm %.0E)S + (%.2E \pm %.0E)$' % ( popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c)
 ax.text(0.0, 2.35, label, fontsize=20 )
 ax.set_ylabel(r'Optimum parameter $d_0$ (length)', fontsize = 20)
 ax.set_title(r'Normal distribution of optimum $d_0$ against the grained cell area $S$', fontsize = 20)
@@ -103,7 +103,7 @@ ax.errorbar(mean_cell_areas, zipf_mean_optimized_d, yerr=zipf_std_optimized_d, f
 
 plt.plot(x_value, quadratic(x_value, *popt), c='k', linewidth=1.0)
 ax.set_xlabel(r'Grained cell area $S$ (length$^2$)', fontsize = 20)
-label = r'$f(c) =(%.2E \pm %.0E)d^2 + (%.0E \pm %.0E)d + (%.2E \pm %.0E)$' % ( popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c)
+label = r'$d_0(S) =(%.2E \pm %.0E)S^2 + (%.0E \pm %.0E)S + (%.2E \pm %.0E)$' % ( popt[0], sigma_a, popt[1], sigma_b, popt[2], sigma_c)
 ax.text(0.0, 2.35, label, fontsize=20 )
 ax.set_ylabel(r'Optimum parameter $d_0$ (length)', fontsize = 20)
 ax.set_title(r'Zipf distribution of optimum $d_0$ against the grained cell area $S$', fontsize = 20)
